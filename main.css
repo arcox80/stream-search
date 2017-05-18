@@ -1,0 +1,9 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Mobile First */
+
+@media only screen and (min-width: 640px) {
+  /* design */
+}
