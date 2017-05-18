@@ -4,6 +4,7 @@ function watchSubmit() {
     var user = {
       firstName: $('#firstName').val(),
       lastName: $('#lastName').val(),
+      email: $('#email').val(),
       username: $('#username').val(),
       password: $('#password').val()
     };

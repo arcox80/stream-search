@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-const STATE_ABBREVIATIONS = Object.keys(require('./state-abbreviations'));
+//const STATE_ABBREVIATIONS = Object.keys(require('./state-abbreviations'));
 
 const UserSchema = mongoose.Schema({
   username: {
@@ -17,6 +17,11 @@ const UserSchema = mongoose.Schema({
   },
   firstName: {type: String, default: ""},
   lastName: {type: String, default: ""},
+  email: {
+    type: String, 
+    required: true,
+    unique: true
+  },
   watchlist: [{
     title: String,
     imageUrl: String
@@ -27,7 +32,8 @@ UserSchema.methods.apiRepr = function() {
   return {
     username: this.username || '',
     firstName: this.firstName || '',
-    lastName: this.lastName || ''
+    lastName: this.lastName || '',
+    email: this.email || ''
   };
 }
 

@@ -3,6 +3,9 @@
 }
 
 /* Mobile First */
+form label {
+  display: block;
+}
 
 @media only screen and (min-width: 640px) {
   /* design */

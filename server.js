@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
-const {router: usersRouter} = require('./users');
+const {router: usersRouter} = require('./router');
 
 mongoose.Promise = global.Promise;
 
@@ -13,6 +13,12 @@ const app = express();
 
 // logging
 app.use(morgan('common'));
+
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/views/index.html');
+});
 
 app.use('/users/', usersRouter);
 
