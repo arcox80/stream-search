@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
     return res.status(422).json({message: 'Missing field: username'});
   }
 
-  let {username, password, firstName, lastName} = req.body;
+  let {username, password, firstName, lastName, email} = req.body;
 
   if (typeof username !== 'string') {
     return res.status(422).json({message: 'Incorrect field type: username'});
@@ -71,6 +71,9 @@ router.post('/', (req, res) => {
     return res.status(422).json({message: 'Incorrect field length: password'});
   }
 
+//Need valid email check
+  email = email.trim();
+
   // check for existing user
   return User
     .find({username})
@@ -89,7 +92,8 @@ router.post('/', (req, res) => {
           username: username,
           password: hash,
           firstName: firstName,
-          lastName: lastName
+          lastName: lastName,
+          email: email
         })
     })
     .then(user => {
@@ -97,6 +101,7 @@ router.post('/', (req, res) => {
     })
     .catch(err => {
       res.status(500).json({message: 'Internal server error'})
+      console.log(err);
     });
 });
 

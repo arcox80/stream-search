@@ -1,3 +1,11 @@
+var state = {
+  user: null
+};
+
+if (localStorage.user) {
+  state.user = JSON.parse(localStorage.user);
+}
+
 function watchSubmit() {
   $('#createUser').on('submit', function (event) {
     event.preventDefault();
@@ -8,8 +16,10 @@ function watchSubmit() {
       username: $('#username').val(),
       password: $('#password').val()
     };
-    sendUserData(user, function () {
-      console.log('User successfully created.');
+    sendUserData(user, function (data) {
+      console.log('User successfully created.', data);
+      localStorage.user = JSON.stringify(data);
+      window.location = 'dashboard.html';
     });
   });
 }
@@ -17,9 +27,10 @@ function watchSubmit() {
 function sendUserData(newUser, callback) {
   var details = {
     url: '/users',
-    data: newUser,
+    data: JSON.stringify(newUser),
     dataType: 'json',
     type: 'POST',
+    contentType: "application/json; charset=utf-8",
     success: callback
   };
   $.ajax(details);
