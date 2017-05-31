@@ -25,17 +25,25 @@ function searchSubmit() {
     searchTitlefromApi(query, function (data) {
       console.log(data);
       state.movies = data.items;
+      displayResults();
     });
   });
 }
 
 function displayResults() {
   state.movies.forEach(function (item) {
-    $('.item-title').append(item.title);
-    $('.item-description').append(item.short_description);
-    for (var i=0; i<item.offers.length; i++) {
-      $('.item-offers').append('<li>' + item.offers[i] + '</li>');
+    var htmlItem = $('.js-result.templ').clone();
+    htmlItem.find('.item-title').append(item.title);
+    htmlItem.find('.item-description').append(item.short_description);
+
+    if (item.offers) {
+      for (var i=0; i<item.offers.length; i++) {
+      htmlItem.find('.item-offers').append('<li>' + item.offers[i].provider_id + " " + item.offers[i].urls.standard_web + '</li>');
+      }
     }
+    
+    htmlItem.removeClass('templ');
+    $('.results').append(htmlItem);
   });
 }
 

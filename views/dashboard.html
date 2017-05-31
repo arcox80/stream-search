@@ -17,12 +17,26 @@
     <div>
       <form id="searchTitle">
         <h2>Search for a Movie or TV Show</h2>
-        
+
         <label for="search">Enter Search Terms Here</label>
         <input type="text" name="search" id="search" />
         <button type="submit">Submit</button>
       </form>
     </div>
+    <div class="results">
+      <div>
+        <h3>Search Results</h3>
+      </div>
+      <div>
+        <div class="js-result templ">
+          <h4 class="item-title"></h4>
+          <p class="item-description"></p>
+          <ul class="item-offers">
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </main>
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
   <script src="/dashboard.js"></script>
