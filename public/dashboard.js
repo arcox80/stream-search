@@ -47,6 +47,12 @@ function displayResults() {
   });
 }
 
+function addToList() {
+  $('.js-addToWatchList').on('click', function (event) {
+    //post to db
+  });
+}
+
 $(function () {
   console.log(state.user);
   $('.js-welcome').append(' ' + state.user.firstName);

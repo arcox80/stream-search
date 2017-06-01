@@ -22,10 +22,13 @@ const UserSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  watchlist: [{
-    title: String,
-    imageUrl: String
-  }]
+  watchlist: [{ type: Schema.Types.ObjectId, ref: 'Watchlist' }]
+});
+
+const WatchListSchema = mongoose.Schema({
+  _creator : { type: Number, ref: 'User' },
+  title: String,
+  imageUrl: String
 });
 
 UserSchema.methods.apiRepr = function() {
@@ -46,5 +49,6 @@ UserSchema.statics.hashPassword = function(password) {
 }
 
 const User = mongoose.model('User', UserSchema);
+const WatchList = mongoose.model('Watchlist', WatchListSchema);
 
 module.exports = {User};
