@@ -4,6 +4,7 @@ const jsonParser = require('body-parser').json();
 const passport = require('passport');
 
 const {User} = require('./models');
+const {WatchList} = require('./models');
 
 const router = express.Router();
 
@@ -105,6 +106,33 @@ router.post('/', (req, res) => {
     });
 });
 
+router.post('/:uid/watchlist', (req, res) => {
+  const requiredFields = ['id', 'title', 'type', 'poster', 'path'];
+  for (let i=0; i<requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing ${field} in request body`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+  const list = WatchList.create({
+    id: req.body.id,
+    title: req.body.title,
+    type: req.body.type,
+    poster: req.body.poster,
+    path: req.body.path
+  })
+    .then(listItem => {
+      User.findById(req.params.uid)
+        .then(user => { 
+          user.watchlist.push(listItem);
+          return user.save();
+        })
+        .then(res.status(201).send({}));
+    })
+});
+
 // never expose all your users like below in a prod application
 // we're just doing this so we have a quick way to see
 // if we're creating users. keep in mind, you can also
@@ -122,7 +150,19 @@ router.get('/', (req, res) => {
 
 router.get('/me',
   passport.authenticate('basic', {session: false}),
-  (req, res) => res.json({user: req.user.apiRepr()})
+  (req, res) => {
+    return User
+      .find()
+      .populate('watchlist')
+      .exec(function (err, user) {
+        if (!err) {
+          res.json({ user: req.user.apiRepr() })
+        } else {
+          console.log(err);
+          res.status(500).json({message: 'Internal server error'});
+        }  
+      })
+  }
 );
 
 

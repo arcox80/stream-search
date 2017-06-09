@@ -35,6 +35,14 @@ function displayResults() {
     var htmlItem = $('.js-result.templ').clone();
     htmlItem.find('.item-title').append(item.title);
     htmlItem.find('.item-description').append(item.short_description);
+    htmlItem.find('.js-release').append("(" + item.original_release_year + ")");
+    htmlItem.find('.js-addToWatchList').attr({
+      'media-id': item.id,
+      'title': item.title,
+      'poster': item.poster,
+      'object-type': item.object_type,
+      'path': item.full_path
+    });
 
     if (item.offers) {
       for (var i=0; i<item.offers.length; i++) {
@@ -43,20 +51,70 @@ function displayResults() {
     }
     
     htmlItem.removeClass('templ');
-    $('.results').append(htmlItem);
+    $('.results').append(htmlItem).show();
+    $
   });
 }
 
 function addToList() {
-  $('.js-addToWatchList').on('click', function (event) {
-    //post to db
+  $('.results').on('click', '.js-addToWatchList', function (event) {
+    var jsonData = {};
+    jsonData['id'] = $(this).attr('media-id');
+    jsonData['title'] = $(this).attr('title');
+    jsonData['poster'] = $(this).attr('poster');
+    jsonData['type'] = $(this).attr('object-type');
+    jsonData['path'] = $(this).attr('path');
+    $.ajax({
+      type: "POST",
+      url: '/users/592da4bce81ff8521201141b/watchlist', 
+      data: JSON.stringify(jsonData), 
+      success: function () {
+        console.log("Success");
+        $(this).html('Saved to Watchlist');
+      },
+      dataType: 'json',
+      contentType: "application/json; charset=utf-8"
+    });
   });
+}
+
+function retrieveWatchList() {
+  $.getJSON('/users/me', function (json) {
+    let htmlItem = $('.js-list-item.templ').clone();
+      const listArray = json.user.watchlist;
+      console.log(listArray);
+      listArray.forEach(function (item) {
+        htmlItem.find('.js-item-title').append(item.title);
+        let imgUrl = item.poster;
+        imgUrl.replace("{profile}", "s166");
+        htmlItem.find('.js-item-img').attr('src', "https://www.justwatch.com/images/" + imgUrl);
+        htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com/" + item.full_path);
+        htmlItem.removeClass('templ');
+      $('.watchlist').append(htmlItem);
+      });
+      console.log("Watchlist retrieved");
+  });
+ /*
+  $.ajax({
+    type: "GET",
+    url:'/users/me',
+    dataType: 'json',
+    data: data,
+    contentType: 'application/json; charset=utf-8',
+    success: function () {
+  
+      
+    }
+  });
+  */
 }
 
 $(function () {
   console.log(state.user);
   $('.js-welcome').append(' ' + state.user.firstName);
+  retrieveWatchList();
   searchSubmit();
+  addToList();
 });
 
 

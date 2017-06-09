@@ -22,13 +22,15 @@ const UserSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  watchlist: [{ type: Schema.Types.ObjectId, ref: 'Watchlist' }]
+  watchlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Watchlist' }]
 });
 
 const WatchListSchema = mongoose.Schema({
-  _creator : { type: Number, ref: 'User' },
   title: String,
-  imageUrl: String
+  id: Number,
+  type: String,
+  poster: String,
+  path: String
 });
 
 UserSchema.methods.apiRepr = function() {
@@ -36,7 +38,8 @@ UserSchema.methods.apiRepr = function() {
     username: this.username || '',
     firstName: this.firstName || '',
     lastName: this.lastName || '',
-    email: this.email || ''
+    email: this.email || '',
+    watchlist: this.watchlist || ''
   };
 }
 
@@ -51,4 +54,4 @@ UserSchema.statics.hashPassword = function(password) {
 const User = mongoose.model('User', UserSchema);
 const WatchList = mongoose.model('Watchlist', WatchListSchema);
 
-module.exports = {User};
+module.exports = {User, WatchList};
