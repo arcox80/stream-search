@@ -152,11 +152,11 @@ router.get('/me',
   passport.authenticate('basic', {session: false}),
   (req, res) => {
     return User
-      .find()
-      .populate('watchlist')
+      .findById('593b59a56af2b154c255b944')
+      .populate({path: 'watchlist', select: 'title poster path'})
       .exec(function (err, user) {
         if (!err) {
-          res.json({ user: req.user.apiRepr() })
+          res.json(user)
         } else {
           console.log(err);
           res.status(500).json({message: 'Internal server error'});

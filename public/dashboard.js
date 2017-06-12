@@ -66,7 +66,7 @@ function addToList() {
     jsonData['path'] = $(this).attr('path');
     $.ajax({
       type: "POST",
-      url: '/users/592da4bce81ff8521201141b/watchlist', 
+      url: '/users/593b59a56af2b154c255b944/watchlist', 
       data: JSON.stringify(jsonData), 
       success: function () {
         console.log("Success");
@@ -80,15 +80,16 @@ function addToList() {
 
 function retrieveWatchList() {
   $.getJSON('/users/me', function (json) {
-    let htmlItem = $('.js-list-item.templ').clone();
-      const listArray = json.user.watchlist;
+      const listArray = json.watchlist;
       console.log(listArray);
       listArray.forEach(function (item) {
+        let htmlItem = $('.js-list-item.templ').clone();
         htmlItem.find('.js-item-title').append(item.title);
         let imgUrl = item.poster;
+        console.log(imgUrl);
         imgUrl.replace("{profile}", "s166");
-        htmlItem.find('.js-item-img').attr('src', "https://www.justwatch.com/images/" + imgUrl);
-        htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com/" + item.full_path);
+        htmlItem.find('.js-item-img').attr('src', "https://www.justwatch.com/images" + imgUrl);
+        htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com" + item.path);
         htmlItem.removeClass('templ');
       $('.watchlist').append(htmlItem);
       });
