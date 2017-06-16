@@ -87,7 +87,7 @@ function retrieveWatchList() {
         htmlItem.find('.js-item-title').append(item.title);
         let imgUrl = item.poster;
         console.log(imgUrl);
-        imgUrl.replace("{profile}", "s166");
+        imgUrl = imgUrl.replace("{profile}", "s166");
         htmlItem.find('.js-item-img').attr('src', "https://www.justwatch.com/images" + imgUrl);
         htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com" + item.path);
         htmlItem.removeClass('templ');

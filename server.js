@@ -2,6 +2,8 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 const {router: usersRouter} = require('./router');
 
@@ -17,7 +19,30 @@ app.use(morgan('common'));
 app.use(express.static('public'));
 app.use(express.static('views'));
 
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    console.log("hello");
+    User.findOne({ username: username }, function (err, user) {
+      console.log(user);
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+  }
+));
+
+app.use(passport.initialize());
+
 app.use('/users/', usersRouter);
+
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/index.html' }),
+  function(req, res) {
+    console.log("working?");
+    res.redirect('/dashboard.html');
+  }
+);
 
 app.use('*', function(req, res) {
   return res.status(404).json({message: 'Not Found'});

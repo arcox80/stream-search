@@ -16,7 +16,8 @@
     "mongoose": "^4.7.4",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
-    "passport-http": "^0.3.0"
+    "passport-http": "^0.3.0",
+    "passport-local": "*"
   },
   "devDependencies": {
     "chai": "^3.5.0",

@@ -36,7 +36,34 @@ function sendUserData(newUser, callback) {
   $.ajax(details);
 }
 
+function userLogin() {
+  $('#userLogin').on('submit', function (event) {
+    event.preventDefault();
+    var user = {
+      username: $('#existingUsername').val(),
+      password: $('#existingPassword').val()
+    };
+    sendLoginData(user, function (data) {
+      console.log('User logged in', data);
+      localStorage.user = JSON.stringify(data);
+      window.location = 'dashboard.html';
+    });
+  });
+}
+
+function sendLoginData(oldUser, callback) {
+  var details = {
+    url:'/login',
+    data: JSON.stringify(oldUser),
+    dataType: 'json',
+    type: 'POST',
+    contentType: 'application/json; charset=utf-8',
+    succes: callback
+  };
+  $.ajax(details);
+}
 
 $(function() {
   watchSubmit();
+  userLogin();
 });

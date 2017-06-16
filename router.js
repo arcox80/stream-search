@@ -2,6 +2,7 @@ const {BasicStrategy} = require('passport-http');
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 const {User} = require('./models');
 const {WatchList} = require('./models');
@@ -11,30 +12,6 @@ const router = express.Router();
 router.use(jsonParser);
 
 
-// NB: at time of writing, passport uses callbacks, not promises
-const basicStrategy = new BasicStrategy((username, password, callback) => {
-  let user;
-  User
-    .findOne({username: username})
-    .exec()
-    .then(_user => {
-      user = _user;
-      if (!user) {
-        return callback(null, false, {message: 'Incorrect username'});
-      }
-      return user.validatePassword(password);
-    })
-    .then(isValid => {
-      if (!isValid) {
-        return callback(null, false, {message: 'Incorrect password'});
-      }
-      else {
-        return callback(null, user)
-      }
-    });
-});
-
-passport.use(basicStrategy);
 router.use(passport.initialize());
 
 router.post('/', (req, res) => {
