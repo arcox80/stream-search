@@ -58,7 +58,7 @@ function sendLoginData(oldUser, callback) {
     dataType: 'json',
     type: 'POST',
     contentType: 'application/json; charset=utf-8',
-    succes: callback
+    success: callback
   };
   $.ajax(details);
 }

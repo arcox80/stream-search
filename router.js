@@ -126,8 +126,9 @@ router.get('/', (req, res) => {
 
 
 router.get('/me',
-  passport.authenticate('basic', {session: false}),
+  passport.authenticate('local'),
   (req, res) => {
+    console.log("me");
     return User
       .findById('593b59a56af2b154c255b944')
       .populate({path: 'watchlist', select: 'title poster path'})
