@@ -6,6 +6,10 @@
   display: none;
 }
 
+.templ {
+  display: none;
+}
+
 /* Mobile First */
 form label {
   display: block;

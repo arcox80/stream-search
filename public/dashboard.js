@@ -21,6 +21,7 @@ function searchTitlefromApi(searchTerm, callback) {
 function searchSubmit() {
   $('#searchTitle').on('submit', function (event) {
     event.preventDefault();
+    $('.js-result-container').empty();
     var query = $('#search').val();
     searchTitlefromApi(query, function (data) {
       console.log(data);
@@ -50,9 +51,11 @@ function displayResults() {
       }
     }
     
-    htmlItem.removeClass('templ');
-    $('.results').append(htmlItem).show();
-    $
+    htmlItem.removeClass('templ hidden');
+    $('.results').show();
+    $('.js-result-container').append(htmlItem);
+    $('.watchlist').html('');
+    //show link/button to return to watchlist
   });
 }
 
@@ -66,7 +69,7 @@ function addToList() {
     jsonData['path'] = $(this).attr('path');
     $.ajax({
       type: "POST",
-      url: '/users/593b59a56af2b154c255b944/watchlist', 
+      url: '/users/me/watchlist', 
       data: JSON.stringify(jsonData), 
       success: function () {
         console.log("Success");
@@ -78,8 +81,93 @@ function addToList() {
   });
 }
 
+function removeFromList() {
+  $('.js-watchlist-results').on('click', '.js-remove-title', function (event) {
+    let titleId = $(this).attr('title-id');
+    $.ajax({
+      type: "DELETE",
+      url: '/users/me/item/' + titleId,
+      data: JSON.stringify({titleId: titleId}),
+      success: function () {
+        console.log("Item removed");
+        $(this).html('Removed from Watchlist');
+      },
+      dataType: 'json',
+      contentType: "application/json; charset=utf-8"
+    });
+    $(this).closest('.js-list-item').remove();
+  });
+}
+
 function retrieveWatchList() {
-  $.getJSON('/users/me', function (json) {
+  $.getJSON('/users/me/', function (json) {
+      const listArray = json.watchlist;
+      console.log(listArray);
+      listArray.forEach(function (item) {
+        let htmlItem = $('.js-list-item.templ').clone();
+        htmlItem.find('.js-item-title').append(item.title);
+        let imgUrl = item.poster;
+        console.log(imgUrl);
+        imgUrl = imgUrl.replace("{profile}", "s166");
+        htmlItem.find('.js-item-img').attr('src', "https://www.justwatch.com/images" + imgUrl);
+        htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com" + item.path);
+        htmlItem.find('.js-remove-title').attr('title-id', item._id);
+        htmlItem.removeClass('templ');
+      $('.js-watchlist-results').append(htmlItem);
+      $('.watchlist').show();
+      });
+      console.log("Watchlist retrieved");
+  });
+}
+
+function userSearchSubmit() {
+  $('#searchUsers').on('submit', function (event) {
+    event.preventDefault();
+    var query = $('#userSearch').val();
+    searchUsers(query, function (data) {
+      console.log(data);
+      state.userResults = data;
+      displayUserResults();
+    });
+  });
+}
+
+function searchUsers(searchTerm, callback) {
+  var details = {
+    url: 'users/?q=' + searchTerm,
+    dataType: 'json',
+    type: 'GET',
+    contentType: "application/json; charset=utf-8",
+    success: callback
+  };
+  $.ajax(details);
+}
+
+function displayUserResults() {
+  state.userResults.forEach(function (item) {
+    var htmlItem = $('.js-userResult.templ').clone();
+    htmlItem.find('.js-username').append(item.username).attr('uid', item._id);
+    htmlItem.find('.js-name').append("(" + item.firstName + " " + item.lastName + ")");
+    if (item.watchlist.length === 1) {
+      htmlItem.find('.js-listCount').append(item.watchlist.length + " item in their Watchlist.");
+    } else {
+      htmlItem.find('.js-listCount').append(item.watchlist.length + " items in their Watchlist.");
+    }
+    htmlItem.removeClass('templ');
+    $('.userResults').append(htmlItem).show();
+  });
+  $('.watchlist').hide();
+  $('.js-watchlist-results').html('');
+};
+
+function usernameClick() {
+  $('.userResults').on('click', '.js-username', function(event) {
+    event.preventDefault();
+    console.log('username click');
+    let userId = $(this).attr('uid');
+    $('.js-userResult').hide();
+    //say user's watchlist
+    $.getJSON('/users/' + userId, function (json) {
       const listArray = json.watchlist;
       console.log(listArray);
       listArray.forEach(function (item) {
@@ -91,24 +179,12 @@ function retrieveWatchList() {
         htmlItem.find('.js-item-img').attr('src', "https://www.justwatch.com/images" + imgUrl);
         htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com" + item.path);
         htmlItem.removeClass('templ');
-      $('.watchlist').append(htmlItem);
-      });
-      console.log("Watchlist retrieved");
+      $('.js-watchlist-results').append(htmlItem);
+      $('.watchlist').show();
+    });
+    });
   });
- /*
-  $.ajax({
-    type: "GET",
-    url:'/users/me',
-    dataType: 'json',
-    data: data,
-    contentType: 'application/json; charset=utf-8',
-    success: function () {
-  
-      
-    }
-  });
-  */
-}
+};
 
 $(function () {
   console.log(state.user);
@@ -116,13 +192,11 @@ $(function () {
   retrieveWatchList();
   searchSubmit();
   addToList();
+  userSearchSubmit();
+  usernameClick();
+  removeFromList();
 });
 
-
-
-/*
-headers: { 'Authorization': "Basic " + btoa(USERNAME + ":" + PASSWORD) }
-*/
 
 
 /* JSON Data

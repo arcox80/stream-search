@@ -18,6 +18,15 @@
       <h1 class="js-welcome">Welcome</h1>
     </div>
     <div>
+      <div>
+      <form id="searchUsers">
+        <h2>Search for a Another User's Watchlist</h2>
+
+        <label for="search">Enter Username Here</label>
+        <input type="text" name="userSearch" id="userSearch" />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
       <form id="searchTitle">
         <h2>Search for a Movie or TV Show</h2>
 
@@ -33,21 +42,36 @@
         <a href="" class="js-item-link">
           <h4 class="js-item-title"></h4>
         </a>
+        <button class="js-remove-title">Remove from List</button>
+      </div>
+      <div class="js-watchlist-results">
+      </div>
+    </div>
+    <div class="userResults hidden">
+      <div>
+        <h3>User Search Results</h3>
+      </div>
+      <div>
+        <div class="js-userResult templ">
+          <a href="#" class="js-username username-title"></a>
+          <p class="js-name"></p>
+          <p class="js-listCount"></p>
+        </div>
       </div>
     </div>
     <div class="results hidden">
       <div>
         <h3>Search Results</h3>
       </div>
-      <div>
-        <div class="js-result templ">
+      <div class="js-result templ hidden">
           <h4 class="item-title"></h4>
           <span class="js-release"></span>
           <button class="js-addToWatchList" media-id="" title="" poster="" object-type="" path="">Add to Watchlist</button>
           <p class="item-description"></p>
           <ul class="item-offers">
           </ul>
-        </div>
+      </div>
+      <div class="js-result-container">
       </div>
     </div>
 

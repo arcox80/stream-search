@@ -53,6 +53,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   console.log("deserialize");
   User.findById(id, function(err, user) {
+    console.log(err);
     done(err, user);
 });
 });
@@ -63,6 +64,7 @@ app.post('/login',
   passport.authenticate('local', { failureRedirect: '/index.html' }),
   function(req, res) {
     console.log("working?");
+    console.log(req.user);
     res.status(200).json(req.user);
   }
 );

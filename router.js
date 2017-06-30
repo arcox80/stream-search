@@ -14,6 +14,29 @@ router.use(jsonParser);
 
 router.use(passport.initialize());
 
+function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+
+    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
+    res.status(401).json({});
+}
+
+//user search
+router.get('/', (req, res) => {
+  let searchTerm = req.query.q;
+  return User.find(
+    { 'username': { '$regex': searchTerm, '$options': 'i'} },
+    function (err, users) {
+      if (err) {
+        console.log(err);
+      }
+      return res.status(200).json(users);
+    }
+  );
+});
+
+
 router.post('/', (req, res) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
@@ -83,7 +106,7 @@ router.post('/', (req, res) => {
     });
 });
 
-router.post('/:uid/watchlist', (req, res) => {
+router.post('/me/watchlist', isAuthenticated, (req, res) => {
   const requiredFields = ['id', 'title', 'type', 'poster', 'path'];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
@@ -101,7 +124,7 @@ router.post('/:uid/watchlist', (req, res) => {
     path: req.body.path
   })
     .then(listItem => {
-      User.findById(req.params.uid)
+      User.findById(req.user.id)
         .then(user => { 
           user.watchlist.push(listItem);
           return user.save();
@@ -114,23 +137,36 @@ router.post('/:uid/watchlist', (req, res) => {
 // we're just doing this so we have a quick way to see
 // if we're creating users. keep in mind, you can also
 // verify this in the Mongo shell.
-router.get('/', (req, res) => {
+// router.get('/', (req, res) => {
+//   return User
+//     .find()
+//     .exec()
+//     .then(users => res.json(users.map(user => user.apiRepr())))
+//     .catch(err => console.log(err) && res.status(500).json({message: 'Internal server error'}));
+// });
+
+router.get('/:id', isAuthenticated, (req, res) => {
+  const uid = (req.params.id === 'me') ? req.user.id : req.params.id;
   return User
-    .find()
-    .exec()
-    .then(users => res.json(users.map(user => user.apiRepr())))
-    .catch(err => console.log(err) && res.status(500).json({message: 'Internal server error'}));
+      .findById(uid)
+      .populate({path: 'watchlist', select: 'title poster path'})
+      .exec(function (err, user) {
+        if (!err) {
+          res.json(user)
+        } else {
+          console.log(err);
+          res.status(500).json({message: 'Internal server error'});
+        }  
+      })
 });
 
 
-
-
-router.get('/me',
-  passport.authenticate('local'),
+router.get('/me/',
+  isAuthenticated,
   (req, res) => {
     console.log("me");
     return User
-      .findById('593b59a56af2b154c255b944')
+      .findById(req.user.id)
       .populate({path: 'watchlist', select: 'title poster path'})
       .exec(function (err, user) {
         if (!err) {
@@ -143,5 +179,11 @@ router.get('/me',
   }
 );
 
+router.delete('/me/item/:id', (req, res) => {
+  WatchList.findByIdAndRemove(req.params.id, function(err) {
+    console.log('Title removed from watchlist');
+    res.status(204).send();
+  });
+});
 
 module.exports = {router};
