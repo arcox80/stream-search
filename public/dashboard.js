@@ -6,6 +6,85 @@ if (localStorage.user) {
   state.user = JSON.parse(localStorage.user);
 }
 
+//Current Watchlist Functions
+function retrieveWatchList() {
+  $.getJSON('/users/me/', function (json) {
+      const listArray = json.watchlist;
+      console.log(listArray);
+      listArray.forEach(function (item) {
+        let htmlItem = $('.js-list-item.templ').clone();
+        htmlItem.find('.js-item-title').append(item.title);
+        let imgUrl = item.poster;
+        console.log(imgUrl);
+        imgUrl = imgUrl.replace("{profile}", "s166");
+        htmlItem.find('.js-item-img').attr('src', "https://www.justwatch.com/images" + imgUrl);
+        htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com" + item.path);
+        htmlItem.find('.js-remove-title').attr('title-id', item._id);
+        htmlItem.find('.js-mark-watched').attr({
+          'watched': item.watched,
+          'title-id': item._id
+        });
+        if (item.watched) { 
+          htmlItem.find('.js-mark-watched').html('Already Watched');
+          //need to also have css styling that changes color of button or something 
+        }
+        htmlItem.removeClass('templ');
+      $('.js-watchlist-results').append(htmlItem);
+      $('.watchlist').show();
+      });
+      console.log("Watchlist retrieved");
+  });
+}
+
+function markAsWatched () {
+  $('.js-watchlist-results').on('click', '.js-mark-watched', function (event) {
+    let titleId = $(this).attr('title-id');
+    let isWatched = $(this).attr('watched');
+    if (isWatched) {
+      $(this).attr('watched', false);
+      isWatched = false;
+      $(this).html('Mark as Watched');
+    } else {
+      $(this).attr('watched', true);
+      isWatched = true;
+      $(this).html('Already Watched');
+    }
+    console.log(isWatched);
+    $.ajax({
+      type: "PUT",
+      url: '/users/me/item/' + titleId,
+      data: JSON.stringify({
+        titleId: titleId,
+        watched: isWatched
+      }),
+      success: function () {
+        console.log("Item watched is " + isWatched);
+      },
+      dataType: 'json',
+      contentType: "application/json; charset=utf-8"
+    });
+  });
+}
+
+function removeFromList() {
+  $('.js-watchlist-results').on('click', '.js-remove-title', function (event) {
+    let titleId = $(this).attr('title-id');
+    $.ajax({
+      type: "DELETE",
+      url: '/users/me/item/' + titleId,
+      data: JSON.stringify({titleId: titleId}),
+      success: function () {
+        console.log("Item removed");
+        $(this).html('Removed from Watchlist');
+      },
+      dataType: 'json',
+      contentType: "application/json; charset=utf-8"
+    });
+    $(this).closest('.js-list-item').remove();
+  });
+}
+
+//Tile Search Functions
 function searchTitlefromApi(searchTerm, callback) {
   var details = {
     url: 'https://api.justwatch.com/titles/en_US/popular',
@@ -67,57 +146,31 @@ function addToList() {
     jsonData['poster'] = $(this).attr('poster');
     jsonData['type'] = $(this).attr('object-type');
     jsonData['path'] = $(this).attr('path');
+    jsonData['watched'] = false;
     $.ajax({
       type: "POST",
       url: '/users/me/watchlist', 
       data: JSON.stringify(jsonData), 
       success: function () {
         console.log("Success");
-        $(this).html('Saved to Watchlist');
       },
       dataType: 'json',
       contentType: "application/json; charset=utf-8"
     });
+    $(this).html('Saved to Watchlist');
   });
 }
 
-function removeFromList() {
-  $('.js-watchlist-results').on('click', '.js-remove-title', function (event) {
-    let titleId = $(this).attr('title-id');
-    $.ajax({
-      type: "DELETE",
-      url: '/users/me/item/' + titleId,
-      data: JSON.stringify({titleId: titleId}),
-      success: function () {
-        console.log("Item removed");
-        $(this).html('Removed from Watchlist');
-      },
-      dataType: 'json',
-      contentType: "application/json; charset=utf-8"
-    });
-    $(this).closest('.js-list-item').remove();
-  });
-}
-
-function retrieveWatchList() {
-  $.getJSON('/users/me/', function (json) {
-      const listArray = json.watchlist;
-      console.log(listArray);
-      listArray.forEach(function (item) {
-        let htmlItem = $('.js-list-item.templ').clone();
-        htmlItem.find('.js-item-title').append(item.title);
-        let imgUrl = item.poster;
-        console.log(imgUrl);
-        imgUrl = imgUrl.replace("{profile}", "s166");
-        htmlItem.find('.js-item-img').attr('src', "https://www.justwatch.com/images" + imgUrl);
-        htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com" + item.path);
-        htmlItem.find('.js-remove-title').attr('title-id', item._id);
-        htmlItem.removeClass('templ');
-      $('.js-watchlist-results').append(htmlItem);
-      $('.watchlist').show();
-      });
-      console.log("Watchlist retrieved");
-  });
+//User Search Functions
+function searchUsers(searchTerm, callback) {
+  var details = {
+    url: 'users/?q=' + searchTerm,
+    dataType: 'json',
+    type: 'GET',
+    contentType: "application/json; charset=utf-8",
+    success: callback
+  };
+  $.ajax(details);
 }
 
 function userSearchSubmit() {
@@ -130,17 +183,6 @@ function userSearchSubmit() {
       displayUserResults();
     });
   });
-}
-
-function searchUsers(searchTerm, callback) {
-  var details = {
-    url: 'users/?q=' + searchTerm,
-    dataType: 'json',
-    type: 'GET',
-    contentType: "application/json; charset=utf-8",
-    success: callback
-  };
-  $.ajax(details);
 }
 
 function displayUserResults() {
@@ -158,7 +200,7 @@ function displayUserResults() {
   });
   $('.watchlist').hide();
   $('.js-watchlist-results').html('');
-};
+}
 
 function usernameClick() {
   $('.userResults').on('click', '.js-username', function(event) {
@@ -186,6 +228,7 @@ function usernameClick() {
   });
 };
 
+
 $(function () {
   console.log(state.user);
   $('.js-welcome').append(' ' + state.user.firstName);
@@ -195,6 +238,7 @@ $(function () {
   userSearchSubmit();
   usernameClick();
   removeFromList();
+  markAsWatched();
 });
 
 

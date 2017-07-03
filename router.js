@@ -3,6 +3,7 @@ const express = require('express');
 const jsonParser = require('body-parser').json();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const mongoose = require('mongoose');
 
 const {User} = require('./models');
 const {WatchList} = require('./models');
@@ -107,7 +108,7 @@ router.post('/', (req, res) => {
 });
 
 router.post('/me/watchlist', isAuthenticated, (req, res) => {
-  const requiredFields = ['id', 'title', 'type', 'poster', 'path'];
+  const requiredFields = ['id', 'title', 'type', 'poster', 'path', 'watched'];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -121,7 +122,8 @@ router.post('/me/watchlist', isAuthenticated, (req, res) => {
     title: req.body.title,
     type: req.body.type,
     poster: req.body.poster,
-    path: req.body.path
+    path: req.body.path,
+    watched: req.body.watched
   })
     .then(listItem => {
       User.findById(req.user.id)
@@ -133,23 +135,11 @@ router.post('/me/watchlist', isAuthenticated, (req, res) => {
     })
 });
 
-// never expose all your users like below in a prod application
-// we're just doing this so we have a quick way to see
-// if we're creating users. keep in mind, you can also
-// verify this in the Mongo shell.
-// router.get('/', (req, res) => {
-//   return User
-//     .find()
-//     .exec()
-//     .then(users => res.json(users.map(user => user.apiRepr())))
-//     .catch(err => console.log(err) && res.status(500).json({message: 'Internal server error'}));
-// });
-
 router.get('/:id', isAuthenticated, (req, res) => {
   const uid = (req.params.id === 'me') ? req.user.id : req.params.id;
   return User
       .findById(uid)
-      .populate({path: 'watchlist', select: 'title poster path'})
+      .populate({path: 'watchlist', select: 'title poster path watched'})
       .exec(function (err, user) {
         if (!err) {
           res.json(user)
@@ -160,29 +150,53 @@ router.get('/:id', isAuthenticated, (req, res) => {
       })
 });
 
+// router.get('/me/',
+//   isAuthenticated,
+//   (req, res) => {
+//     console.log("me");
+//     return User
+//       .findById(req.user.id)
+//       .populate({path: 'watchlist'})
+//       .exec(function (err, user) {
+//         if (!err) {
+//           console.log(user);
+//           res.json(user)
+//         } else {
+//           console.log(err);
+//           res.status(500).json({message: 'Internal server error'});
+//         }  
+//       })
+//   }
+// );
 
-router.get('/me/',
-  isAuthenticated,
-  (req, res) => {
-    console.log("me");
-    return User
-      .findById(req.user.id)
-      .populate({path: 'watchlist', select: 'title poster path'})
-      .exec(function (err, user) {
-        if (!err) {
-          res.json(user)
-        } else {
-          console.log(err);
-          res.status(500).json({message: 'Internal server error'});
-        }  
-      })
-  }
-);
+router.put('/me/item/:id', (req, res) => {
+  WatchList.findByIdAndUpdate(req.params.id, 
+  { $set: { watched: req.body.watched }}, 
+  { new: true },
+  function(err) {
+    console.log('Title watched was set to ' + req.body.watched);
+    res.status(204).send();
+  });
+});
 
 router.delete('/me/item/:id', (req, res) => {
   WatchList.findByIdAndRemove(req.params.id, function(err) {
     console.log('Title removed from watchlist');
-    res.status(204).send();
+    //Also needs to delete reference from User
+    User.findOne({'_id': req.user.id}, function(err, me) {
+      me.watchlist.remove(req.params.id);
+      me.save(function (err) {
+        console.log(err);
+      });
+    });
+/*
+    User.update(
+      { _id: req.user.id },
+      { $pull: { watchlist: [mongoose.Schema.Types.ObjectId(req.params.id) ] } }
+    , function(err) {
+      res.status(204).send();
+    });
+*/
   });
 });
 

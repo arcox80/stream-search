@@ -30,7 +30,8 @@ const WatchListSchema = mongoose.Schema({
   id: Number,
   type: String,
   poster: String,
-  path: String
+  path: String,
+  watched: Boolean
 });
 
 UserSchema.methods.apiRepr = function() {
