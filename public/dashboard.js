@@ -40,7 +40,7 @@ function markAsWatched () {
   $('.js-watchlist-results').on('click', '.js-mark-watched', function (event) {
     let titleId = $(this).attr('title-id');
     let isWatched = $(this).attr('watched');
-    if (isWatched) {
+    if (JSON.parse(isWatched)) {
       $(this).attr('watched', false);
       isWatched = false;
       $(this).html('Mark as Watched');
@@ -231,7 +231,7 @@ function usernameClick() {
 
 $(function () {
   console.log(state.user);
-  $('.js-welcome').append(' ' + state.user.firstName);
+  $('.js-welcome').append(' ' + state.user.firstName + '!');
   retrieveWatchList();
   searchSubmit();
   addToList();

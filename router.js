@@ -170,6 +170,7 @@ router.get('/:id', isAuthenticated, (req, res) => {
 // );
 
 router.put('/me/item/:id', (req, res) => {
+  console.log(req.params.id, req.body.watched);
   WatchList.findByIdAndUpdate(req.params.id, 
   { $set: { watched: req.body.watched }}, 
   { new: true },
@@ -187,6 +188,7 @@ router.delete('/me/item/:id', (req, res) => {
       me.watchlist.remove(req.params.id);
       me.save(function (err) {
         console.log(err);
+        res.status(204).send();
       });
     });
 /*
