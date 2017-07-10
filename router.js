@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
 });
 
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
@@ -99,12 +99,14 @@ router.post('/', (req, res) => {
         })
     })
     .then(user => {
-      return res.status(201).json(user.apiRepr());
+      return next();
     })
     .catch(err => {
       res.status(500).json({message: 'Internal server error'})
       console.log(err);
     });
+}, passport.authenticate('local'), function(req, res) {
+  res.status(201).send(req.user);
 });
 
 router.post('/me/watchlist', isAuthenticated, (req, res) => {

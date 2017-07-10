@@ -10,11 +10,105 @@
   display: none;
 }
 
+header {
+  background-color: #051d28;
+  border-bottom: 1px solid #1d242a;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 50px;
+  display: block;
+  margin: 0 auto;
+  padding-left: 10px;
+}
+
+body {
+  background-color: #0c151d;
+  color: #d5d5d5;
+  font-family: 'Open Sans', Arial, sans-serif;
+  margin-top: 50px;
+  padding-left: 10px;
+}
+
+a {
+  color: #78a6b8;
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+}
+
+button {
+  border: 1px solid #d5d5d5;
+  background-color: #051d28;
+  margin-bottom: 5px;
+}
+
+button.btn-style {
+  border-left: 1px solid rgba(10,10,10,.98);
+  border-right: 1px solid rgba(10,10,10,.98);
+  border-top: none;
+  border-bottom: 5px solid rgba(0,0,0,.98);
+  background-color: rgba(0,0,0,.98);
+  margin-bottom: 5px;
+  height: 30px;
+}
+
+button.btn-style:hover {
+  border: none;
+  background-color: rgba(0,0,0,.98);
+  border-bottom: 5px solid #e2b100!important;
+}
+
+button.btn-watch {
+  background-color: rgba(0,0,0,.98);
+  margin-bottom: 10px;
+}
+
+button.btn-watch:hover {
+  background-color: #5cb85c;
+}
+
+button.watched {
+  background-color: #5cb85c;
+  margin-bottom: 5px;
+}
+
+button.btn-remove {
+  background-color: rgba(0,0,0,.98);
+}
+
+button.btn-remove:hover {
+  background-color: #d9534f;
+  margin-bottom: 5px;
+}
+
 /* Mobile First */
 form label {
   display: block;
 }
 
+span.item-title {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.item {
+  margin-bottom: 10px;
+}
+
+.glyphicon.glyphicon-ok {
+  font-size: 20px;
+}
+
+.glyphicon.glyphicon-remove {
+  font-size: 20px;
+}
+
+/* Tablet */
 @media only screen and (min-width: 640px) {
   /* design */
 }

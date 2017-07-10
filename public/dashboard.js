@@ -25,8 +25,9 @@ function retrieveWatchList() {
           'title-id': item._id
         });
         if (item.watched) { 
-          htmlItem.find('.js-mark-watched').html('Already Watched');
-          //need to also have css styling that changes color of button or something 
+          htmlItem.find('.js-mark-watched').attr('title', 'Already Watched');
+          htmlItem.find('.js-glyph-ok').append(' Already Watched');
+          htmlItem.find('.js-mark-watched').addClass('watched');
         }
         htmlItem.removeClass('templ');
       $('.js-watchlist-results').append(htmlItem);
@@ -43,11 +44,16 @@ function markAsWatched () {
     if (JSON.parse(isWatched)) {
       $(this).attr('watched', false);
       isWatched = false;
-      $(this).html('Mark as Watched');
+      $(this).removeClass('watched');
+      $(this).attr('title', 'Mark as Watched');
+      $('.js-glyph-ok').append(' Mark as Watched');
     } else {
       $(this).attr('watched', true);
       isWatched = true;
-      $(this).html('Already Watched');
+      $(this).addClass('watched');
+      $(this).attr('title', 'Already Watched');
+      $('.js-glyph-ok').append(' Already Watched');
+      
     }
     console.log(isWatched);
     $.ajax({
@@ -84,7 +90,7 @@ function removeFromList() {
   });
 }
 
-//Tile Search Functions
+//Title Search Functions
 function searchTitlefromApi(searchTerm, callback) {
   var details = {
     url: 'https://api.justwatch.com/titles/en_US/popular',
@@ -130,8 +136,9 @@ function displayResults() {
       }
     }
     
-    htmlItem.removeClass('templ hidden');
-    $('.results').show();
+    htmlItem.removeClass('templ');
+    console.log(htmlItem);
+    $('.results').removeClass('hidden');
     $('.js-result-container').append(htmlItem);
     $('.watchlist').html('');
     //show link/button to return to watchlist
