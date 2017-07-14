@@ -51,18 +51,18 @@
       <h3>Your Watchlist</h3>
       <div class="js-list-item templ">
         <div class="row item">
-          <div class="col-xs-4 col-sm-2">
-            <img src="" class="js-item-img" alt="">
+          <div class="col-xs-4 col-sm-2 item-img">
+            <img src="" class="js-item-img item-img" alt="">
           </div>
           <div class="col-xs-8 col-sm-9">
             <a href="" class="js-item-link">
               <span class="js-item-title item-title"></span>
             </a>
             <div class="row">
-                  <div class="col-xs-12 col-sm-4" title="Mark as Watched">
+                  <div class="col-xs-11 col-sm-4" title="Mark as Watched">
                 <button class="js-mark-watched btn-watch"><i class="glyphicon glyphicon-ok js-glyph-ok"></i> Mark as Watched</button>
               </div>
-              <div class="col-xs-12 col-sm-4" title="Remove from List">
+              <div class="col-xs-11 col-sm-4" title="Remove from List">
                 <button class="js-remove-title btn-remove"><i class="glyphicon glyphicon-remove js-glpyh-remove"></i> Remove</button>
               </div>
     
@@ -89,15 +89,38 @@
       <div>
         <h3>Search Results</h3>
       </div>
-      <div class="js-result templ">
+      <div class="js-result templ col-sm-10">
           <h4 class="item-title"></h4>
           <span class="js-release"></span>
           <button class="js-addToWatchList" media-id="" title="" poster="" object-type="" path="">Add to Watchlist</button>
           <p class="item-description"></p>
-          <ul class="item-offers">
-          </ul>
+          <div class="js-offer-list">
+            <div class="row">
+              <div class="js-offer-type-sub col-sm-10">
+                <span class="js-offer-bar"></span>
+                <div class="row js-sub-row">
+                </div>
+              </div>
+              <div class="js-offer-type-rent col-sm-10">
+                <span class="js-offer-bar"></span>
+                <div class="row js-rent-row">
+                </div>
+              </div>
+              <div class="js-offer-type-buy col-sm-10">
+                <span class="js-offer-bar"></span>
+                <div class="row js-buy-row">
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
-      <div class="js-result-container">
+      <div class="js-item-offers col-xs-1 col-sm-1 templ">
+        <a href="" class="js-offer-link">
+          <img src="" class="js-offer-img offer-img">
+          <span class="js-presentation"></span>
+        </a>      
+      </div>
+      <div class="js-result-container row">
       </div>
     </div>
 

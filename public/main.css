@@ -40,6 +40,12 @@ img {
   width: 100%;
 }
 
+img.offer-img {
+  border-radius: 11px;
+  width: 50px;
+  height: 50px;
+}
+
 button {
   border: 1px solid #d5d5d5;
   background-color: #051d28;
@@ -100,6 +106,10 @@ span.item-title {
   margin-bottom: 10px;
 }
 
+.item-img {
+  max-width: 121px;
+}
+
 .glyphicon.glyphicon-ok {
   font-size: 20px;
 }
@@ -109,6 +119,8 @@ span.item-title {
 }
 
 /* Tablet */
-@media only screen and (min-width: 640px) {
-  /* design */
+@media only screen and (min-width: 768px) {
+  .item-img {
+    max-width: 100%;
+  }
 }
