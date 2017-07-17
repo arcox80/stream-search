@@ -13,6 +13,9 @@ function retrieveWatchList() {
     console.log(listArray);
     listArray.forEach(function (item) {
       let htmlItem = $('.js-list-item.templ').clone();
+      if (item.title.length > 43) {
+        item.title = item.title.substring(0,40) + '...';
+      }
       htmlItem.find('.js-item-title').append(item.title);
       let imgUrl = item.poster;
       imgUrl = imgUrl.replace("{profile}", "s166");
@@ -25,9 +28,8 @@ function retrieveWatchList() {
       });
       if (item.watched) {
         htmlItem.find('.js-mark-watched').attr('title', 'Already Watched');
-        htmlItem.find('.js-mark-watched').html("<i class='glyphicon glyphicon-ok js-glyph-ok'></i> Already Watched");
+        htmlItem.find('.js-mark-watched').html("<i class='glyphicon glyphicon-ok js-glyph-ok'></i>");
         htmlItem.find('.js-mark-watched').addClass('watched');
-        fdsafdsafsdadsa
       }
       htmlItem.removeClass('templ');
       $('.js-watchlist-results').append(htmlItem);
@@ -46,13 +48,13 @@ function markAsWatched() {
       isWatched = false;
       $(this).removeClass('watched');
       $(this).attr('title', 'Mark as Watched');
-      $(this).html("<i class='glyphicon glyphicon-ok js-glyph-ok'></i> Mark as Watched");
+      $(this).html("<i class='glyphicon glyphicon-eye-open js-glyph-ok'></i>");
     } else {
       $(this).attr('watched', true);
       isWatched = true;
       $(this).addClass('watched');
       $(this).attr('title', 'Already Watched');
-      $(this).html("<i class='glyphicon glyphicon-ok js-glyph-ok'></i> Already Watched");
+      $(this).html("<i class='glyphicon glyphicon-ok js-glyph-ok'></i>");
 
     }
     $.ajax({
@@ -262,7 +264,7 @@ function displayResults() {
         
 
         if (item.offers[i].monetization_type === 'flatrate') {
-          htmlItem.find('.js-offer-type-sub .js-offer-bar').html('SUBS');
+          htmlItem.find('.js-offer-type-sub .js-offer-bar').html('SUBSCRIPTION');
           htmlItemOffer.find('.js-offer-link').attr('href', item.offers[i].urls.standard_web);
           htmlItemOffer.find('.js-offer-img').attr('src', 'img/' + providerIdImg);
           htmlItemOffer.find('.js-presentation').html(item.offers[i].presentation_type.toUpperCase());

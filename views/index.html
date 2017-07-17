@@ -6,7 +6,7 @@
   <meta name="description" content="Description Goes Here">
   <title>Stream Search</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="stylesheet" href="/main.css">
 </head>
@@ -18,32 +18,35 @@
     </div>
     <div class="newUsers">
       <form id="createUser">
-        <h2>Sign Up for a Username</h2>
+        <h2>New Users Sign Up Here</h2>
         <label for="firstName">First Name</label>
-        <input type="text" name="firstName" id="firstName" />
+        <input type="text" name="firstName" id="firstName" required />
         <label for="lastName">Last Name</label>
-        <input type="text" name="lastName" id="lastName" />
+        <input type="text" name="lastName" id="lastName" required />
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" />
+        <input type="email" name="email" id="email" required/>
         <label for="username">Username</label>
-        <input type="text" name="username" id="username" />
+        <input type="text" name="username" id="username" required />
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" />
-        <button type="submit">Submit</button>
+        <input type="password" name="password" id="password" required />
+        <label for="password2">Confirm Password</label>
+        <input type="password" name="password2" id="password2" required />
+        <button type="submit" class="btn form-btn">Submit</button>
       </form>
     </div>
     <div class="oldUsers">
       <form id="userLogin">
         <h2>Existing Users Login Here</h2>
         <label for="username">Username</label>
-        <input type="text" name="username" id="existingUsername" />
+        <input type="text" name="username" id="existingUsername" required />
         <label for="password">Password</label>
-        <input type="password" name="password" id="existingPassword" />
-        <button type="submit">Submit</button>
+        <input type="password" name="password" id="existingPassword" required />
+        <button type="submit" class="btn form-btn">Submit</button>
       </form>
     </div>
   </main>
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="/app.js"></script>
 </body>
 

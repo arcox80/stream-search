@@ -46,54 +46,68 @@ img.offer-img {
   height: 50px;
 }
 
+input {
+  color: #000;
+}
+
 button {
-  border: 1px solid #d5d5d5;
-  background-color: #051d28;
+  background-color: #d5d5d5;
   margin-bottom: 5px;
 }
 
-button.btn-style {
-  border-left: 1px solid rgba(10,10,10,.98);
-  border-right: 1px solid rgba(10,10,10,.98);
-  border-top: none;
-  border-bottom: 5px solid rgba(0,0,0,.98);
-  background-color: rgba(0,0,0,.98);
-  margin-bottom: 5px;
-  height: 30px;
+button.form-btn {
+  height: 26px;
+  padding: 2px 12px;
+  color: #183f4e;
+  vertical-align: top;
 }
 
-button.btn-style:hover {
-  border: none;
-  background-color: rgba(0,0,0,.98);
-  border-bottom: 5px solid #e2b100!important;
+button.justwatch {
+  margin-left: -4px;
+  border-radius: 0 4px 4px 0;
+}
+
+button.form-btn:hover {
+  background-color: #e2b100;
 }
 
 button.btn-watch {
-  background-color: rgba(0,0,0,.98);
-  margin-bottom: 10px;
+  background-color: #5cb85c;
 }
 
 button.btn-watch:hover {
-  background-color: #5cb85c;
+  background-color: #49f749;
+  color: #fff;
 }
 
 button.watched {
-  background-color: #5cb85c;
-  margin-bottom: 5px;
+  background-color: #49f749;
+  color: #fff;
 }
 
 button.btn-remove {
-  background-color: rgba(0,0,0,.98);
+  background-color: #d9534f;
 }
 
 button.btn-remove:hover {
-  background-color: #d9534f;
-  margin-bottom: 5px;
+  background-color: #e81d17;
+  color: #fff;
 }
 
-/* Mobile First */
+input[type='text'].justwatch {
+  background-color: #d5d5d5;
+  border-color: #d5d5d5;
+  border-style: solid;
+  border-radius: 4px 0 0 4px;
+}
+
 form label {
   display: block;
+  margin-top: 10px;
+}
+
+.title-overflow {
+  overflow: hidden;
 }
 
 span.item-title {
@@ -106,8 +120,9 @@ span.item-title {
   margin-bottom: 10px;
 }
 
-.item-img {
+div.item-img {
   max-width: 121px;
+  padding-right: 5px;
 }
 
 .glyphicon.glyphicon-ok {
@@ -116,6 +131,14 @@ span.item-title {
 
 .glyphicon.glyphicon-remove {
   font-size: 20px;
+}
+
+.glyphicon.glyphicon-eye-open {
+  font-size: 20px;
+}
+
+.ellipsis { 
+  text-overflow: ellipsis;
 }
 
 /* Tablet */
