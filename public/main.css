@@ -13,21 +13,31 @@
 header {
   background-color: #051d28;
   border-bottom: 1px solid #1d242a;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 50px;
-  display: block;
-  margin: 0 auto;
-  padding-left: 10px;
+  margin-left: -10px;
+}
+
+nav.navbar {
+  margin-bottom: 0;
+}
+
+div.row.mynav {
+  padding: 5px;
+}
+
+.container-fluid>.navbar-header {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 5px;
+}
+
+p.logout {
+  margin-right: 8.33333%;
 }
 
 body {
   background-color: #0c151d;
   color: #d5d5d5;
   font-family: 'Open Sans', Arial, sans-serif;
-  margin-top: 50px;
   padding-left: 10px;
 }
 
@@ -38,6 +48,10 @@ a {
 
 img {
   width: 100%;
+}
+
+img.logo {
+  width: 125px;
 }
 
 img.offer-img {
@@ -60,6 +74,14 @@ button.form-btn {
   padding: 2px 12px;
   color: #183f4e;
   vertical-align: top;
+}
+
+div.clarity-center {
+  text-align: center;
+}
+
+span.clarity {
+  display: block;
 }
 
 button.justwatch {
@@ -107,7 +129,10 @@ form label {
 }
 
 .title-overflow {
-  overflow: hidden;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
 }
 
 span.item-title {
@@ -137,7 +162,9 @@ div.item-img {
   font-size: 20px;
 }
 
-.ellipsis { 
+.ellipsis {
+  display: table-cell;
+  overflow: hidden; 
   text-overflow: ellipsis;
 }
 
@@ -145,5 +172,8 @@ div.item-img {
 @media only screen and (min-width: 768px) {
   .item-img {
     max-width: 100%;
+  }
+  div.navbar-header.nav-offset {
+    margin-left: 8.33333333%;
   }
 }

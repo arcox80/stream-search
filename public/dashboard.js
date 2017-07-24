@@ -13,9 +13,9 @@ function retrieveWatchList() {
     console.log(listArray);
     listArray.forEach(function (item) {
       let htmlItem = $('.js-list-item.templ').clone();
-      if (item.title.length > 43) {
-        item.title = item.title.substring(0,40) + '...';
-      }
+      // if (item.title.length > 43) {
+      //   item.title = item.title.substring(0,40) + '...';
+      // }
       htmlItem.find('.js-item-title').append(item.title);
       let imgUrl = item.poster;
       imgUrl = imgUrl.replace("{profile}", "s166");

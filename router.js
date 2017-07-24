@@ -47,7 +47,7 @@ router.post('/', (req, res, next) => {
     return res.status(422).json({message: 'Missing field: username'});
   }
 
-  let {username, password, firstName, lastName, email} = req.body;
+  let {username, password, password2, firstName, lastName, email} = req.body;
 
   if (typeof username !== 'string') {
     return res.status(422).json({message: 'Incorrect field type: username'});
@@ -71,6 +71,10 @@ router.post('/', (req, res, next) => {
 
   if (password.length < 5) {
     return res.status(422).json({message: 'Incorrect field length: password'});
+  }
+
+  if (password !== password2) {
+    return res.status(422).json({message: 'Passwords do not match'});
   }
 
 //Need valid email check

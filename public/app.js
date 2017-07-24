@@ -9,12 +9,17 @@ if (localStorage.user) {
 function watchSubmit() {
   $('#createUser').on('submit', function (event) {
     event.preventDefault();
+    if ($('#password').val() !== $('#password2').val()) {
+      $('.pass-check').removeClass('hidden');
+      return;
+    }
     var user = {
       firstName: $('#firstName').val(),
       lastName: $('#lastName').val(),
       email: $('#email').val(),
       username: $('#username').val(),
-      password: $('#password').val()
+      password: $('#password').val(),
+      password2: $('#password2').val()
     };
     sendUserData(user, function (data) {
       console.log('User successfully created.', data);
