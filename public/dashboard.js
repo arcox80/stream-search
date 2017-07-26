@@ -120,6 +120,9 @@ function searchSubmit() {
 function displayResults() {
   state.movies.forEach(function (item) {
     let htmlItem = $('.js-result.templ').clone();
+    let imgUrl = item.poster;
+    imgUrl = imgUrl.replace("{profile}", "s166");
+    htmlItem.find('.js-img').attr('src', "https://www.justwatch.com/images" + imgUrl);
     htmlItem.find('.item-title').append(item.title);
     htmlItem.find('.item-description').append(item.short_description);
     htmlItem.find('.js-release').append("(" + item.original_release_year + ")");
@@ -197,6 +200,9 @@ function displayResults() {
             case 43:
               text = 'starz.jpeg';
               break;
+            case 60:
+              text = 'fandango.jpeg';
+              break;
             case 68:
               text = 'microsoft-store.jpeg';
               break;
@@ -264,7 +270,7 @@ function displayResults() {
         
 
         if (item.offers[i].monetization_type === 'flatrate') {
-          htmlItem.find('.js-offer-type-sub .js-offer-bar').html('SUBSCRIPTION');
+          htmlItem.find('.js-offer-type-sub .js-offer-bar').html('STREAM');
           htmlItemOffer.find('.js-offer-link').attr('href', item.offers[i].urls.standard_web);
           htmlItemOffer.find('.js-offer-img').attr('src', 'img/' + providerIdImg);
           htmlItemOffer.find('.js-presentation').html(item.offers[i].presentation_type.toUpperCase());
@@ -275,6 +281,12 @@ function displayResults() {
           htmlItemOffer.find('.js-offer-img').attr('src', 'img/' + providerIdImg);
           htmlItemOffer.find('.js-presentation').html(item.offers[i].presentation_type.toUpperCase());
           htmlItem.find('.js-rent-row').append(htmlItemOffer);
+        } else if (item.offers[i].monetization_type === 'cinema') {
+          htmlItem.find('.js-offer-type-cinema .js-offer-bar').html('CINEMA');
+          htmlItemOffer.find('.js-offer-link').attr('href', item.offers[i].urls.standard_web);
+          htmlItemOffer.find('.js-offer-img').attr('src', 'img/' + providerIdImg);
+          htmlItemOffer.find('.js-presentation').html(item.offers[i].presentation_type.toUpperCase());
+          htmlItem.find('.js-cinema-row').append(htmlItemOffer);
         } else {
           htmlItem.find('.js-offer-type-buy .js-offer-bar').html('BUY');
           htmlItemOffer.find('.js-offer-link').attr('href', item.offers[i].urls.standard_web);
@@ -441,6 +453,7 @@ $(function () {
 34 - epix
 37 - showtime
 43 - starz
+60 - fandango
 68 - microsoft
 73 - tubitv
 78 - cbs
@@ -452,7 +465,7 @@ $(function () {
 99 - shudder
 100 - guidedoc
 102 - filmstruck
-105 - fandango
+105 - fandango now
 123 - fx now
 139 - max go
 143 - sundance now

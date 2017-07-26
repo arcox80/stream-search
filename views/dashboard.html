@@ -11,17 +11,18 @@
   <link rel="stylesheet" href="/main.css" />
 </head>
 
+
 <body>
 
   <header>
     <nav class="navbar">
       <div class="row mynav">
-        <div class="navbar-header col-xs-9 col-sm-offset-1 col-sm-8 col-md-6">
+        <div class="navbar-header col-xs-9 col-sm-offset-1 col-sm-9 col-md-offset-1 col-md-9 col-lg-offset-2 col-lg-7">
           <a href="dashboard.html">
             <img src="img/streamlogo2.png" class="logo" alt="Stream Search Logo">
           </a>
         </div>
-        <div class="col-xs-2 col-sm-1 col-md-2">
+        <div class="col-xs-3 col-sm-1 col-md-1 col-lg-1">
           <p class="logout navbar-text navbar-right">
             <a href="/logout">Logout</a>
           </p>
@@ -30,19 +31,22 @@
     </nav>
   </header>
 
+
   <main>
     <div>
-      <h1 class="js-welcome col-sm-offset-1">Welcome</h1>
+      <h1 class="js-welcome col-sm-offset-1 col-md-offset-1 col-lg-offset-2">Welcome</h1>
     </div>
+
     <div class="row">
-      <div class="col-xs-12 col-sm-offset-1">
+      <div class="col-xs-12 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
         <form id="searchTitle">
           <label for="search">Search for a Movie or TV Show</label>
           <input type="text" name="search" id="search" class="justwatch" placeholder="Movie/TV Show Title..." />
           <button type="submit" class="btn form-btn justwatch"><i class="glyphicon glyphicon-search"></i></button>
         </form>
       </div>
-      <div class="col-xs-12 col-sm-offset-1">
+
+      <div class="col-xs-12 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
         <form id="searchUsers">
           <label for="search">Search for a Another User's Watchlist</label>
           <input type="text" name="userSearch" id="userSearch" class="justwatch" placeholder="Username..." />
@@ -50,25 +54,28 @@
         </form>
       </div>
     </div>
+
+
     <div class="watchlist">
-      <h3 class="col-sm-offset-1">Your Watchlist</h3>
-      <div class="js-list-item templ">
+      <h3 class="col-sm-offset-1 col-md-offset-1 col-lg-offset-2">Your Watchlist</h3>
+
+      <div class="js-list-item templ col-xs-12 col-sm-6 col-md-4 col-lg-4 list-item">
         <div class="row item">
-          <div class="col-xs-4 col-sm-2 col-sm-offset-1 col-md-2 item-img">
+          <div class="col-xs-4 item-img">
             <img src="" class="js-item-img item-img" alt="">
           </div>
-          <div class="col-xs-8 col-sm-8 col-md-7">
+          <div class="col-xs-8">
             <div class="row">
-              <div class="col-xs-10 col-sm-8">
+              <div class="col-xs-12">
                 <a href="" class="js-item-link title-overflow">
                   <span class="js-item-title item-title ellipsis"></span>
                 </a>
               </div>
-              <div class="col-xs-5 col-sm-2 clarity-center" title="Mark as Watched">
+              <div class="col-xs-5 clarity-center" title="Mark as Watched">
                 <span class="clarity">Watched?</span>
                 <button class="js-mark-watched btn-watch btn btn-sm"><i class="glyphicon glyphicon-eye-open js-glyph-ok"></i></button>
               </div>
-              <div class="col-xs-5 col-sm-2 clarity-center" title="Remove from List">
+              <div class="col-xs-5 clarity-center" title="Remove from List">
                 <span class="clarity">Remove</span>
                 <button class="js-remove-title btn-remove btn btn-sm"><i class="glyphicon glyphicon-remove js-glpyh-remove"></i></button>
               </div>
@@ -76,9 +83,14 @@
           </div>
         </div>
       </div>
-      <div class="js-watchlist-results">
+
+      <div class="row">
+        <div class="js-watchlist-results col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+        </div>
       </div>
     </div>
+
+
     <div class="userResults hidden">
       <div>
         <h3>User Search Results</h3>
@@ -91,36 +103,63 @@
         </div>
       </div>
     </div>
+
+
     <div class="results hidden">
       <div>
-        <h3>Search Results</h3>
+        <h3 class="col-sm-offset-1 col-md-offset-1 col-lg-offset-1">Search Results</h3>
       </div>
-      <div class="js-result templ col-sm-10">
-        <h4 class="item-title"></h4>
-        <span class="js-release"></span>
-        <button class="js-addToWatchList" media-id="" title="" poster="" object-type="" path="">Add to Watchlist</button>
-        <p class="item-description"></p>
-        <div class="js-offer-list">
+      <div class="js-result templ">
+        <div class="col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10 result-container">
           <div class="row">
-            <div class="js-offer-type-sub col-sm-10">
-              <span class="js-offer-bar"></span>
-              <div class="row js-sub-row">
+            <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2">
+              <img src="" class="js-img item-img" alt="">
+            </div>
+            <div class="col-xs-8 col-lg-8">
+              <h4 class="item-title"></h4>
+              <div class="row">
+                <div class="col-xs-4 col-lg-1">
+                  <span class="js-release"></span>
+                </div>
+                <div class="col-xs-5 col-lg-1">
+                  <button class="js-addToWatchList btn btn-sm btn-watch btn-add" media-id="" title="" poster="" object-type="" path="">Add to Watchlist</button>
+                </div>
+                <div class="col-xs-12">
+                  <p class="item-description"></p>
+                </div>
               </div>
             </div>
-            <div class="js-offer-type-rent col-sm-10">
-              <span class="js-offer-bar"></span>
-              <div class="row js-rent-row">
-              </div>
-            </div>
-            <div class="js-offer-type-buy col-sm-10">
-              <span class="js-offer-bar"></span>
-              <div class="row js-buy-row">
+          </div>
+          <div class="row">
+            <div class="js-offer-list col-xs-12">
+              <div class="row">
+                <div class="js-offer-type-cinema offers col-sm-10">
+                  <span class="js-offer-bar cinema bar"></span>
+                  <div class="row js-cinema-row offer-rows">
+                  </div>
+                </div>
+                <div class="js-offer-type-sub offers col-sm-10">
+                  <span class="js-offer-bar sub bar"></span>
+                  <div class="row js-sub-row offer-rows">
+                  </div>
+                </div>
+                <div class="js-offer-type-rent offers col-sm-10">
+                  <span class="js-offer-bar rent bar"></span>
+                  <div class="row js-rent-row offer-rows">
+                  </div>
+                </div>
+                <div class="js-offer-type-buy offers col-sm-10">
+                  <span class="js-offer-bar buy bar"></span>
+                  <div class="row js-buy-row offer-rows">
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="js-item-offers col-xs-2 col-sm-1 templ">
+
+      <div class="js-item-offers col-xs-3 col-sm-1 templ">
         <a href="" class="js-offer-link">
           <img src="" class="js-offer-img offer-img">
           <span class="js-presentation"></span>
@@ -129,8 +168,8 @@
       <div class="js-result-container row">
       </div>
     </div>
-
   </main>
+
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="/dashboard.js"></script>

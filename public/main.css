@@ -32,6 +32,7 @@ div.row.mynav {
 
 p.logout {
   margin-right: 8.33333%;
+  text-align: right;
 }
 
 body {
@@ -145,6 +146,10 @@ span.item-title {
   margin-bottom: 10px;
 }
 
+.list-item {
+  margin-bottom: 10px;
+}
+
 div.item-img {
   max-width: 121px;
   padding-right: 5px;
@@ -168,6 +173,47 @@ div.item-img {
   text-overflow: ellipsis;
 }
 
+.result-container {
+  margin-bottom: 20px;
+}
+
+.offers {
+  margin-top: 10px;
+}
+
+.offer-rows {
+  text-align: center;
+}
+
+.btn-add {
+  margin-bottom: 5px;
+}
+
+span.bar {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+span.cinema {
+  background-color: #000;
+  color: #d6d6d6;
+}
+
+span.sub {
+  background-color: #e6e6e6;
+  color: #6d6d6d;
+}
+
+span.rent {
+  background-color: #7c7c7c;
+  color: #d6d6d6;
+}
+
+span.buy {
+  background-color: #373737;
+  color: #d6d6d6;
+}
+
 /* Tablet */
 @media only screen and (min-width: 768px) {
   .item-img {
@@ -175,5 +221,9 @@ div.item-img {
   }
   div.navbar-header.nav-offset {
     margin-left: 8.33333333%;
+  }
+
+  input.justwatch {
+    width: 33%;
   }
 }
