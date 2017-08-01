@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: UiF54wSnKn8E60R6QnAo33NwBxNbD8KUzZ3F2G6vfymmh/Ow1LEM2GoCrKzxKRnkFPF3aO0pnNFwOG3jZ8ttgPzhRNpbAS2Bx0t85xJ2a4sAONiK+5bFBVN9Bz+sxFxNmyhwwW01tmAG/U/6VcB1QdaM+RH0z+VHXidsnZSKq12hxLwpAkKRzN/1k4M5NCxAsOPo5NIfefGLeTH6l414SIGobrh8GFN3WnTHfEv06443YaV2lvanYQ6cdqmkoUCfg6uth0S/Yte+fKA7cAcQNQZfS5HHPfJa5i66BpHCy38xfbDSK4LyZFSsFCzYNIHZDZ04z+YLeZ8Ds/rFWbcNFTlZ6EgFG/3yI/0trwVL35b8pKMmG6EW8LubNpZ3JKCJiSFCUiehb+lDwhqtZtluC1aMr+QOAAN6wkFguP+D4qT7mDgUU1TPNARKOxJZBJOLeMcaOlm+4i8OBqrqzikNjXjBt6l4jcl7eHHZ/kz7QsY4POFbNVmxH1fKQLDy/azNkyjv0MJeUg2QIdLE8cxx/dbShPp0Pb1q2+W63ayRQf0WScXWknNiwA4FdHZv5vpAoeTqyohdo0/UaptPXYF0u96IFGSiY1vWd1powiuXS802eHq4FZ8jSZ23wgJNPHIs6dm8F/VuqRk1KoJemMPubcTnG3nMDPNTo9AXi+pr2fU=
+  app: stream-search
+  on:
+    repo: arcox80/stream-search
