@@ -33,7 +33,8 @@ function retrieveWatchList() {
       }
       htmlItem.removeClass('templ');
       $('.js-watchlist-results').append(htmlItem);
-      $('.watchlist').show();
+      $('.js-your-watchlist').html('Your Watchlist');
+      $('.js-watchlist').show();
     });
     console.log("Watchlist retrieved");
   });
@@ -285,7 +286,7 @@ function displayResults() {
           htmlItem.find('.js-offer-type-cinema .js-offer-bar').html('CINEMA');
           htmlItemOffer.find('.js-offer-link').attr('href', item.offers[i].urls.standard_web);
           htmlItemOffer.find('.js-offer-img').attr('src', 'img/' + providerIdImg);
-          htmlItemOffer.find('.js-presentation').html(item.offers[i].presentation_type.toUpperCase());
+          htmlItemOffer.find('.js-presentation').html('TICKET');
           htmlItem.find('.js-cinema-row').append(htmlItemOffer);
         } else {
           htmlItem.find('.js-offer-type-buy .js-offer-bar').html('BUY');
@@ -300,8 +301,12 @@ function displayResults() {
 
     htmlItem.removeClass('templ');
     $('.results').removeClass('hidden');
+    $('.results').show();
     $('.js-result-container').append(htmlItem);
-    $('.watchlist').html('');
+    $('.js-watchlist-results').html('');
+    $('.js-watchlist').hide();
+    $('.js-userResults').hide();
+    $('.js-userResults-list').html('');
     //show link/button to return to watchlist
   });
 }
@@ -347,6 +352,7 @@ function userSearchSubmit() {
     var query = $('#userSearch').val();
     searchUsers(query, function (data) {
       state.userResults = data;
+      $('.js-userResults-list').html('');
       displayUserResults();
     });
   });
@@ -356,6 +362,7 @@ function displayUserResults() {
   state.userResults.forEach(function (item) {
     var htmlItem = $('.js-userResult.templ').clone();
     htmlItem.find('.js-username').append(item.username).attr('uid', item._id);
+    htmlItem.find('.js-username').attr('firstName', item.firstName);
     htmlItem.find('.js-name').append("(" + item.firstName + " " + item.lastName + ")");
     if (item.watchlist.length === 1) {
       htmlItem.find('.js-listCount').append(item.watchlist.length + " item in their Watchlist.");
@@ -363,18 +370,24 @@ function displayUserResults() {
       htmlItem.find('.js-listCount').append(item.watchlist.length + " items in their Watchlist.");
     }
     htmlItem.removeClass('templ');
-    $('.userResults').append(htmlItem).show();
+    $('.js-userResults-list').append(htmlItem);
+    $('.js-userResults').removeClass('hidden');
+    $('.js-userResults').show();
   });
-  $('.watchlist').hide();
+  $('.js-watchlist').hide();
   $('.js-watchlist-results').html('');
+  $('.results').hide();
+  $('.js-results-container').html('');
+  console.log(state);
 }
 
 function usernameClick() {
-  $('.userResults').on('click', '.js-username', function (event) {
+  $('.js-userResults').on('click', '.js-username', function (event) {
     event.preventDefault();
     let userId = $(this).attr('uid');
-    $('.js-userResult').hide();
-    //say user's watchlist
+    let firstName = $(this).attr('firstName');
+    $('.js-userResults-list').html('');
+    $('.js-userResults').addClass('hidden');
     $.getJSON('/users/' + userId, function (json) {
       const listArray = json.watchlist;
       console.log(listArray);
@@ -387,7 +400,8 @@ function usernameClick() {
         htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com" + item.path);
         htmlItem.removeClass('templ');
         $('.js-watchlist-results').append(htmlItem);
-        $('.watchlist').show();
+        $('.js-your-watchlist').html(firstName + "'s Watchlist");
+        $('.js-watchlist').show();
       });
     });
   });

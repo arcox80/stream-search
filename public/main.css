@@ -192,6 +192,8 @@ div.item-img {
 span.bar {
   margin-bottom: 5px;
   text-align: center;
+  display: block;
+  width: auto;
 }
 
 span.cinema {
@@ -217,7 +219,7 @@ span.buy {
 /* Tablet */
 @media only screen and (min-width: 768px) {
   .item-img {
-    max-width: 100%;
+    max-width: 200px;
   }
   div.navbar-header.nav-offset {
     margin-left: 8.33333333%;
