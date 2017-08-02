@@ -14,12 +14,20 @@ describe('Testing html', function () {
   after(function () {
     return closeServer();
   });
-  it('should get a 200 status code and html from root url', function () {
+  it('should return a 200 status code and index.html', function () {
     return chai.request(app)
       .get('/')
       .then(function (res) {
         res.should.have.status(200);
         res.should.be.html;
       });
-  })
+  });
+  it('should return a 200 status code and dashboard.html', function () {
+    return chai.request(app)
+      .get('/dashboard.html')
+      .then(function (res) {
+        res.should.have.status(200);
+        res.should.be.html;
+      });
+  });
 });
