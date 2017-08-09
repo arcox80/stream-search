@@ -37,7 +37,7 @@ router.get('/', (req, res) => {
   );
 });
 
-
+//new user registration
 router.post('/', (req, res, next) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
@@ -110,7 +110,7 @@ router.post('/', (req, res, next) => {
       console.log(err);
     });
 }, passport.authenticate('local'), function(req, res) {
-  res.status(201).send(req.user);
+  res.status(201).send(req.user.apiRepr());
 });
 
 router.post('/me/watchlist', isAuthenticated, (req, res) => {

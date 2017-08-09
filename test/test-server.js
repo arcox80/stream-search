@@ -35,11 +35,28 @@ describe('Testing html and registration', function () {
         res.should.be.html;
       });
   });
+  it('should return a 201 status code and new registered user', function () {
+    const newUser = {
+      firstNAme: 'Terry',
+      lastName: 'Cox',
+      username: 'tcox',
+      email: 'tcox@email.com',
+      password: 'thinkful',
+      password2: 'thinkful'
+    };
+    return chai.request(app)
+      .post('/users/')
+      .send(newUser)
+      .then(function (res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.include.all.keys('username', 'email', 'lastName', 'firstName', 'watchlist');
+      });
+  });
 });
 
 function seedDb() {
   return new Promise((resolve, reject) => {
-    console.log(streamSearchUsers);
     let docs = streamSearchUsers.map(function (val) {
       return new User(val);
     });
@@ -81,18 +98,21 @@ describe('testing API', function () {
   before(function () {
     return runServer(TEST_DATABASE_URL);
   });
-  beforeEach(function () {
-    return seedDb();
+  beforeEach(function (done) {
+    teardDownDb().then(function() {
+      return seedDb().then(function() {
+        done();
+      });
+    });
   });
   afterEach(function () {
-    return teardDownDb();
   });
   after(function () {
     return closeServer();
   });
   it('should login a registered user', function () {
     const regUser = {
-      username: 'ccox',
+      username: 'acox',
       password: 'thinkful'
     };
     return chai.request(app)
@@ -101,7 +121,7 @@ describe('testing API', function () {
       .then(function (res) {
         res.should.have.status(200);
         res.should.be.json;
-        res.body.should.include.all.keys('_id', 'username', 'password', 'email', 'watchlist', 'lastName', 'firstName');
+        res.body.should.include.all.keys('username', 'email', 'watchlist', 'lastName', 'firstName');
       });
   });
 });

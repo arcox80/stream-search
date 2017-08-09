@@ -28,9 +28,10 @@ app.use(express.static('views'));
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
-    console.log("hello");
+    console.log(username);
+    console.log('starting strategy');
     User.findOne({ username: username }, function (err, user) {
-      console.log(user);
+      console.log(`finding ${user}`);
       if (err) { return done(err); }
       if (!user) { return done(null, false); }
       user.validatePassword(password)
@@ -38,6 +39,7 @@ passport.use(new LocalStrategy(
           if (!valid) {
             return done(null, false, 'Incorrect password');
           }
+          console.log('verified');
           return done(null, user);
         })
     });
@@ -68,7 +70,6 @@ app.use('/users/', usersRouter);
 app.post('/login',
   passport.authenticate('local'),
   function (req, res) {
-    console.log("working?");
     console.log(req.user.apiRepr());
     res.status(200).json(req.user.apiRepr());
   }
