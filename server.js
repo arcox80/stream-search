@@ -69,8 +69,8 @@ app.post('/login',
   passport.authenticate('local'),
   function (req, res) {
     console.log("working?");
-    console.log(req.user);
-    res.status(200).json(req.user);
+    console.log(req.user.apiRepr());
+    res.status(200).json(req.user.apiRepr());
   }
 );
 
