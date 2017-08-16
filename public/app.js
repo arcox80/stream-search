@@ -1,4 +1,4 @@
-var state = {
+let state = {
   user: null
 };
 
@@ -13,7 +13,7 @@ function watchSubmit() {
       $('.pass-check').removeClass('hidden');
       return;
     }
-    var user = {
+    let user = {
       firstName: $('#firstName').val(),
       lastName: $('#lastName').val(),
       email: $('#email').val(),
@@ -30,7 +30,7 @@ function watchSubmit() {
 }
 
 function sendUserData(newUser, callback) {
-  var details = {
+  let details = {
     url: '/users',
     data: JSON.stringify(newUser),
     dataType: 'json',
@@ -44,7 +44,7 @@ function sendUserData(newUser, callback) {
 function userLogin() {
   $('#userLogin').on('submit', function (event) {
     event.preventDefault();
-    var user = {
+    let user = {
       username: $('#existingUsername').val(),
       password: $('#existingPassword').val()
     };
@@ -57,7 +57,7 @@ function userLogin() {
 }
 
 function sendLoginData(oldUser, callback) {
-  var details = {
+  let details = {
     url:'/login',
     data: JSON.stringify(oldUser),
     dataType: 'json',
@@ -65,10 +65,14 @@ function sendLoginData(oldUser, callback) {
     contentType: 'application/json; charset=utf-8',
     success: callback
   };
-  $.ajax(details);
+  $.ajax(details)
+    .fail(function (xhr, status, errorThrown) {
+      console.log(`Error: ${errorThrown}`);
+      console.log(`Status: ${status}`);
+    });
 }
 
-$(function() {
+$(function () {
   watchSubmit();
   userLogin();
 });
