@@ -113,6 +113,7 @@ router.post('/', (req, res, next) => {
   res.status(201).send(req.user.apiRepr());
 });
 
+//title added to watchlist
 router.post('/me/watchlist', isAuthenticated, (req, res) => {
   const requiredFields = ['id', 'title', 'type', 'poster', 'path', 'watched'];
   for (let i=0; i<requiredFields.length; i++) {
@@ -141,14 +142,18 @@ router.post('/me/watchlist', isAuthenticated, (req, res) => {
     })
 });
 
+//retrieve user's watchlist
 router.get('/:id', isAuthenticated, (req, res) => {
   const uid = (req.params.id === 'me') ? req.user.id : req.params.id;
+  console.log(req.params.id);
   return User
       .findById(uid)
       .populate({path: 'watchlist', select: 'title poster path watched'})
       .exec(function (err, user) {
         if (!err) {
+          console.log('success?');
           res.json(user)
+          console.log(user);
         } else {
           console.log(err);
           res.status(500).json({message: 'Internal server error'});
@@ -156,25 +161,24 @@ router.get('/:id', isAuthenticated, (req, res) => {
       })
 });
 
-// router.get('/me/',
-//   isAuthenticated,
-//   (req, res) => {
-//     console.log("me");
-//     return User
-//       .findById(req.user.id)
-//       .populate({path: 'watchlist'})
-//       .exec(function (err, user) {
-//         if (!err) {
-//           console.log(user);
-//           res.json(user)
-//         } else {
-//           console.log(err);
-//           res.status(500).json({message: 'Internal server error'});
-//         }  
-//       })
+// router.get('/me/', isAuthenticated, (req, res) => {
+//   console.log("me");
+//   return User
+//     .findById(req.user.id)
+//     .populate({path: 'watchlist'})
+//     .exec(function (err, user) {
+//       if (!err) {
+//         console.log(user);
+//         res.json(user)
+//       } else {
+//         console.log(err);
+//         res.status(500).json({message: 'Internal server error'});
+//       }  
+//     })
 //   }
 // );
 
+//mark title as watched/unwatched in watchlist
 router.put('/me/item/:id', (req, res) => {
   console.log(req.params.id, req.body.watched);
   WatchList.findByIdAndUpdate(req.params.id, 
@@ -186,6 +190,7 @@ router.put('/me/item/:id', (req, res) => {
   });
 });
 
+//remove title from watchlist
 router.delete('/me/item/:id', (req, res) => {
   WatchList.findByIdAndRemove(req.params.id, function(err) {
     console.log('Title removed from watchlist');

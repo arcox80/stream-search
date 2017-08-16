@@ -13,9 +13,6 @@ function retrieveWatchList() {
     console.log(listArray);
     listArray.forEach(function (item) {
       let htmlItem = $('.js-list-item.templ').clone();
-      // if (item.title.length > 43) {
-      //   item.title = item.title.substring(0,40) + '...';
-      // }
       htmlItem.find('.js-item-title').append(item.title);
       let imgUrl = item.poster;
       imgUrl = imgUrl.replace("{profile}", "s166");
@@ -28,7 +25,7 @@ function retrieveWatchList() {
       });
       if (item.watched) {
         htmlItem.find('.js-mark-watched').attr('title', 'Already Watched');
-        htmlItem.find('.js-mark-watched').html("<i class='glyphicon glyphicon-ok js-glyph-ok'></i>");
+        htmlItem.find('.js-mark-watched').html(`<i class="glyphicon glyphicon-ok js-glyph-ok"></i>`);
         htmlItem.find('.js-mark-watched').addClass('watched');
       }
       htmlItem.removeClass('templ');
@@ -49,24 +46,24 @@ function markAsWatched() {
       isWatched = false;
       $(this).removeClass('watched');
       $(this).attr('title', 'Mark as Watched');
-      $(this).html("<i class='glyphicon glyphicon-eye-open js-glyph-ok'></i>");
+      $(this).html(`<i class="glyphicon glyphicon-eye-open js-glyph-ok"></i>`);
     } else {
       $(this).attr('watched', true);
       isWatched = true;
       $(this).addClass('watched');
       $(this).attr('title', 'Already Watched');
-      $(this).html("<i class='glyphicon glyphicon-ok js-glyph-ok'></i>");
+      $(this).html(`<i class="glyphicon glyphicon-ok js-glyph-ok"></i>`);
 
     }
     $.ajax({
       type: "PUT",
-      url: '/users/me/item/' + titleId,
+      url: `/users/me/item/${titleId}`,
       data: JSON.stringify({
         titleId: titleId,
         watched: isWatched
       }),
       success: function () {
-        console.log("Item watched is " + isWatched);
+        console.log(`Item watched is ${isWatched}`);
       },
       dataType: 'json',
       contentType: "application/json; charset=utf-8"
@@ -95,7 +92,7 @@ function removeFromList() {
 //Title Search Functions
 function searchTitlefromApi(searchTerm, callback) {
   let details = {
-    url: 'https://api.justwatch.com/titles/en_US/popular',
+    url: '/search',
     data: JSON.stringify({ "query": searchTerm }),
     dataType: 'json',
     type: 'POST',
@@ -126,7 +123,7 @@ function displayResults() {
     htmlItem.find('.js-img').attr('src', "https://www.justwatch.com/images" + imgUrl);
     htmlItem.find('.item-title').append(item.title);
     htmlItem.find('.item-description').append(item.short_description);
-    htmlItem.find('.js-release').append("(" + item.original_release_year + ")");
+    htmlItem.find('.js-release').append(`(${item.original_release_year})`);
     htmlItem.find('.js-addToWatchList').attr({
       'media-id': item.id,
       'title': item.title,
@@ -363,11 +360,11 @@ function displayUserResults() {
     var htmlItem = $('.js-userResult.templ').clone();
     htmlItem.find('.js-username').append(item.username).attr('uid', item._id);
     htmlItem.find('.js-username').attr('firstName', item.firstName);
-    htmlItem.find('.js-name').append("(" + item.firstName + " " + item.lastName + ")");
+    htmlItem.find('.js-name').append(`(${item.firstName} ${item.lastName})`);
     if (item.watchlist.length === 1) {
-      htmlItem.find('.js-listCount').append(item.watchlist.length + " item in their Watchlist.");
+      htmlItem.find('.js-listCount').append(`${item.watchlist.length} item in their Watchlist.`);
     } else {
-      htmlItem.find('.js-listCount').append(item.watchlist.length + " items in their Watchlist.");
+      htmlItem.find('.js-listCount').append(`${item.watchlist.length} items in their Watchlist.`);
     }
     htmlItem.removeClass('templ');
     $('.js-userResults-list').append(htmlItem);
@@ -405,12 +402,12 @@ function usernameClick() {
       });
     });
   });
-};
+}
 
 
 $(function () {
   console.log(state.user);
-  $('.js-welcome').append(' ' + state.user.firstName + '!');
+  $('.js-welcome').append(` ${state.user.firstName}!`);
   retrieveWatchList();
   searchSubmit();
   addToList();

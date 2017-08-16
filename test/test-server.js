@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const { app, runServer, closeServer } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 const { User, WatchList } = require('../models');
-const  streamSearchUsers  = require('../stream-search-users.js');
-const  streamSearchWatchlists  = require('../stream-search-watchlists.js');
+const streamSearchUsers = require('../stream-search-users.js');
+const streamSearchWatchlists = require('../stream-search-watchlists.js');
 
 const should = chai.should();
 
@@ -99,8 +99,8 @@ describe('testing API', function () {
     return runServer(TEST_DATABASE_URL);
   });
   beforeEach(function (done) {
-    teardDownDb().then(function() {
-      return seedDb().then(function() {
+    teardDownDb().then(function () {
+      return seedDb().then(function () {
         done();
       });
     });
@@ -123,5 +123,50 @@ describe('testing API', function () {
         res.should.be.json;
         res.body.should.include.all.keys('username', 'email', 'watchlist', 'lastName', 'firstName');
       });
+  });
+  it('should add a title to a user watchlist', function () {
+    const regUser = {
+      username: 'acox',
+      password: 'thinkful'
+    };
+    const newTitle = {
+      id: 139586,
+      title: "Weekend at Bernie's",
+      type: "movie",
+      poster: "/poster/296760/{profile}",
+      path: "/us/movie/weekend-at-bernies",
+      watched: false
+    };
+    return chai.request(app)
+      .post('/login')
+      .send(regUser)
+      .post('/users/me/watchlist')
+      .send(newTitle)
+      .then(function (res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.include.all.keys('id', 'title', 'type', 'poster', 'path', 'watched');
+      });
+  });
+  it('should mark a title as watched or unwatched', function () {
+    const movieId = '595afa307dd438f90e37a0bd';
+    const nowWatched = {
+        watched: true,
+        titleId: '595afa307dd438f90e37a0bd'
+      }
+    return chai.request(app)
+      .put(`/users/me/item/${movieId}`)
+      .send(nowWatched)
+      .then(function (res) {
+        res.should.have.status();
+        res.should.be.json;
+        res.body.should.include.all.keys();
+      });
+  });
+  it('should remove a title from the user watchlist', function () {
+    //code
+  });
+  it('should return a list of users matching the query search term', function () {
+    //code
   });
 });
