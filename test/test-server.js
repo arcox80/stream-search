@@ -58,6 +58,9 @@ describe('Testing html and registration', function () {
 function seedDb() {
   return new Promise((resolve, reject) => {
     let docs = streamSearchUsers.map(function (val) {
+      console.log(`This is val from seedDB()
+      ${val}`);
+      //UserSchema.watchlist.push()
       return new User(val);
     });
     User.insertMany(docs, function (err, success) {
@@ -99,36 +102,27 @@ describe('testing API', function () {
     return runServer(TEST_DATABASE_URL);
   });
   beforeEach(function (done) {
-    teardDownDb().then(function () {
-      return seedDb().then(function () {
-        done();
+    teardDownDb()
+      .then(function () {
+        return seedDb();
+      })
+      .then(function () {
+        chai.request(app)
+          .post('/login')
+          .set('contentType', 'application/json')
+          .send({ username: 'acox', password: 'thinkful' })
+          .end(function (err, res) {
+            Cookies = res.headers['set-cookie'].pop().split(';')[0];
+            done();
+          });
       });
-    });
   });
   afterEach(function () {
   });
   after(function () {
     return closeServer();
   });
-  it('should login a registered user', function () {
-    const regUser = {
-      username: 'acox',
-      password: 'thinkful'
-    };
-    return chai.request(app)
-      .post('/login')
-      .send(regUser)
-      .then(function (res) {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.include.all.keys('username', 'email', 'watchlist', 'lastName', 'firstName');
-      });
-  });
   it('should add a title to a user watchlist', function () {
-    const regUser = {
-      username: 'acox',
-      password: 'thinkful'
-    };
     const newTitle = {
       id: 139586,
       title: "Weekend at Bernie's",
@@ -138,8 +132,6 @@ describe('testing API', function () {
       watched: false
     };
     return chai.request(app)
-      .post('/login')
-      .send(regUser)
       .post('/users/me/watchlist')
       .send(newTitle)
       .then(function (res) {
@@ -149,24 +141,34 @@ describe('testing API', function () {
       });
   });
   it('should mark a title as watched or unwatched', function () {
-    const movieId = '595afa307dd438f90e37a0bd';
     const nowWatched = {
-        watched: true,
-        titleId: '595afa307dd438f90e37a0bd'
-      }
+      watched: true,
+      titleId: '595afa307dd438f90e37a0bd'
+    }
     return chai.request(app)
-      .put(`/users/me/item/${movieId}`)
+      .put(`/users/me/item/${nowWatched.titleId}`)
       .send(nowWatched)
       .then(function (res) {
-        res.should.have.status();
-        res.should.be.json;
-        res.body.should.include.all.keys();
+        res.should.have.status(204);
       });
   });
   it('should remove a title from the user watchlist', function () {
-    //code
+    let titleToRemove = { titleId: '596cc7382eb3f303cfdb2eeb' };
+    return chai.request(app)
+      .delete(`/users/me/item/${titleToRemove.titleId}`)
+      .send(titleToRemove)
+      .then(function (res) {
+        res.should.have.status(204);
+      });
   });
   it('should return a list of users matching the query search term', function () {
-    //code
+    let searchTerm = 'smith';
+    return chai.request(app)
+      .get(`/users/?q=${searchTerm}`)
+      .then(function (res) {
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.length.should.be.above(0);
+      });
   });
 });

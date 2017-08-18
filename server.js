@@ -83,57 +83,14 @@ app.get('/logout', (req, res) => {
   res.redirect('/index.html');
 })
 
-/*
-app.use('/', function (req, res) {  
-  var url = apiServerHost + req.url;
-  req.pipe(request(url)).pipe(res);
-});
-*/
-
-app.post('/search', function (req, res) {  
-  console.log(req.body);
+app.post('/search', function (req, res) {
   let url = 'https://api.justwatch.com/titles/en_US/popular';;
-  request.post({url: url, headers: {'content-type': 'application/json'}, body: JSON.stringify(req.body)}).pipe(res);
-  // var body = JSON.stringify({
-  //     query: "gladiator"
-  // })
-
-  // var request = new http.ClientRequest({
-  //     hostname: "api.justwatch.com",
-  //     port: 443,
-  //     path: "/titles/en_US/popular",
-  //     method: "POST",
-  //     headers: {
-  //         "Content-Type": "application/json",
-  //         "Content-Length": Buffer.byteLength(body)
-  //     }
-  // })
-
-  // request.end(body)
+  request.post({ url: url, headers: { 'content-type': 'application/json' }, body: JSON.stringify(req.body) }).pipe(res);
 });
-
-// app.get('/search', cors(), function (req, res, next) {
-//   let searchTerm = req.query;
-//   let options = {
-//     url: 'https://api.justwatch.com/titles/en_US/popular',
-//     qs: {
-//       query: searchTerm
-//     }
-//   };
-//   request.post(options, function (err, res, body) {
-//     console.log(body);
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     res.status(200).send(body);
-//   });
-// });
 
 app.use('*', function (req, res) {
   return res.status(404).json({ message: 'Not Found' });
 });
-
-
-
 
 // referenced by both runServer and closeServer. closeServer
 // assumes runServer has run and set `server` to a server object
@@ -176,4 +133,3 @@ if (require.main === module) {
 };
 
 module.exports = { app, runServer, closeServer };
-
