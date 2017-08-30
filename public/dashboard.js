@@ -333,7 +333,7 @@ function addToList() {
 
 //User Search Functions
 function searchUsers(searchTerm, callback) {
-  var details = {
+  let details = {
     url: 'users/?q=' + searchTerm,
     dataType: 'json',
     type: 'GET',
@@ -346,7 +346,7 @@ function searchUsers(searchTerm, callback) {
 function userSearchSubmit() {
   $('#searchUsers').on('submit', function (event) {
     event.preventDefault();
-    var query = $('#userSearch').val();
+    let query = $('#userSearch').val();
     searchUsers(query, function (data) {
       state.userResults = data;
       $('.js-userResults-list').html('');
@@ -357,7 +357,7 @@ function userSearchSubmit() {
 
 function displayUserResults() {
   state.userResults.forEach(function (item) {
-    var htmlItem = $('.js-userResult.templ').clone();
+    let htmlItem = $('.js-userResult.templ').clone();
     htmlItem.find('.js-username').append(item.username).attr('uid', item._id);
     htmlItem.find('.js-username').attr('firstName', item.firstName);
     htmlItem.find('.js-name').append(`(${item.firstName} ${item.lastName})`);
