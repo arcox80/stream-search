@@ -177,6 +177,7 @@ router.put('/me/item/:id', (req, res) => {
 
 //remove title from watchlist
 router.delete('/me/item/:id', (req, res) => {
+  console.log(req.params.id);
   WatchList.findByIdAndRemove(req.params.id, function (err) {
     if (!err) {
       console.log('Title removed from watchlist');

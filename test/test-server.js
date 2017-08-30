@@ -10,6 +10,8 @@ const streamSearchWatchlists = require('../stream-search-watchlists.js');
 
 const should = chai.should();
 
+let Cookies = null;
+
 chai.use(chaiHttp);
 
 describe('Testing html and registration', function () {
@@ -37,7 +39,7 @@ describe('Testing html and registration', function () {
   });
   it('should return a 201 status code and new registered user', function () {
     const newUser = {
-      firstNAme: 'Terry',
+      firstName: 'Terry',
       lastName: 'Cox',
       username: 'tcox',
       email: 'tcox@email.com',
@@ -51,41 +53,65 @@ describe('Testing html and registration', function () {
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.include.all.keys('username', 'email', 'lastName', 'firstName', 'watchlist');
+        return User.findOne({ username: newUser.username });
+      })
+      .then(function (user) {
+        user.username.should.equal(newUser.username);
+        user.email.should.equal(newUser.email);
+        user.firstName.should.equal(newUser.firstName);
+        user.lastName.should.equal(newUser.lastName);
       });
   });
 });
 
-function seedDb() {
-  return new Promise((resolve, reject) => {
-    let docs = streamSearchUsers.map(function (val) {
-      console.log(`This is val from seedDB()
-      ${val}`);
-      //UserSchema.watchlist.push()
-      return new User(val);
+const userList = [
+  { username: 'acox', password: 'thinkful', firstName: 'Andrew', lastName: 'Cox', email: 'acox@email.com', watchlist: [] },
+  { username: 'ccox', password: 'thinkful', firstName: 'Charles', lastName: 'Cox', email: 'ccox@email.com', watchlist: [] }
+];
+
+const titleList = [
+  { id: 123345, title: 'Trolls', type: 'movie', poster: '/poster/1356624/{profile}', path: '/us/movie/trolls', watched: true },
+  { id: 181359, title: 'Frozen', type: 'movie', poster: '/poster/401363/{profile}', path: '/us/movie/frozen-2013', watched: false },
+  { id: 135902, title: 'Inside Out', type: 'movie', poster: '/poster/672669/{profile}', path: '/us/movie/inside-out-2015', watched: true },
+  { id: 43784, title: 'Saving Silverman', type: 'movie', poster: '/poster/89978/{profile}', path: '/us/movie/saving-silverman', watched: false }
+];
+
+function createDb(done) {
+  User.hashPassword("thinkful")
+    .then(function (hash) {
+      let user = userList[1];
+      user.password = hash;
+      User.create(user)
+        .then(function (obj) {
+          console.log('first user done');
+          console.log("starting second user");
+          user = userList[0];
+          user.password = hash;
+          User.create(user)
+            .then(function (user) {
+              console.log('second user done');
+              console.log("titles start");
+              Promise.all(titleList.map(function (title) {
+                return new Promise(function (resolve, reject) {
+                  WatchList.create(title)
+                    .then(listItem => {
+                      console.log("title done");
+                      user.watchlist.push(listItem);
+                      console.log('title added to user watchlist')
+                      return user.save(resolve);
+                    });
+                })
+              }))
+                .then(function () {
+                  done();
+                });
+            })
+        })
     });
-    User.insertMany(docs, function (err, success) {
-      if (err) {
-        reject(err);
-        console.log(err);
-        throw "Error seeding users collection";
-      } else {
-        console.log(success);
-        let watchDocs = streamSearchWatchlists.map(function (val) {
-          return new WatchList(val);
-        });
-        WatchList.insertMany(watchDocs, function (err, success) {
-          if (err) {
-            reject(err);
-            console.log(err);
-            throw "Error seeding watchlists collection";
-          } else {
-            console.log(success);
-            resolve();
-          }
-        });
-      }
-    });
-  });
+}
+
+function seedDb(done) {
+  createDb(done);
 }
 
 function teardDownDb() {
@@ -104,20 +130,19 @@ describe('testing API', function () {
   beforeEach(function (done) {
     teardDownDb()
       .then(function () {
-        return seedDb();
+        seedDb(function () {
+          console.log("login start");
+          chai.request(app)
+            .post('/login')
+            .set('contentType', 'application/json')
+            .send({ username: 'acox', password: 'thinkful' })
+            .end(function (err, res) {
+              Cookies = res.headers['set-cookie'].pop().split(';')[0];
+              console.log("Cookies");
+              done();
+            });
+        });
       })
-      .then(function () {
-        chai.request(app)
-          .post('/login')
-          .set('contentType', 'application/json')
-          .send({ username: 'acox', password: 'thinkful' })
-          .end(function (err, res) {
-            Cookies = res.headers['set-cookie'].pop().split(';')[0];
-            done();
-          });
-      });
-  });
-  afterEach(function () {
   });
   after(function () {
     return closeServer();
@@ -131,38 +156,60 @@ describe('testing API', function () {
       path: "/us/movie/weekend-at-bernies",
       watched: false
     };
-    return chai.request(app)
-      .post('/users/me/watchlist')
-      .send(newTitle)
+    let req = chai.request(app)
+      .post('/users/me/watchlist');
+    req.cookies = Cookies;
+    return req.send(newTitle)
       .then(function (res) {
         res.should.have.status(201);
-        res.should.be.json;
-        res.body.should.include.all.keys('id', 'title', 'type', 'poster', 'path', 'watched');
+        return WatchList.findOne({ id: newTitle.id });
+      })
+      .then(function (movie) {
+        movie.id.should.equal(newTitle.id);
+        movie.title.should.equal(newTitle.title);
+        movie.type.should.equal(newTitle.type);
+        movie.poster.should.equal(newTitle.poster);
+        movie.path.should.equal(newTitle.path);
+        movie.watched.should.equal(newTitle.watched);
       });
   });
   it('should mark a title as watched or unwatched', function () {
-    const nowWatched = {
-      watched: true,
-      titleId: '595afa307dd438f90e37a0bd'
-    }
-    return chai.request(app)
-      .put(`/users/me/item/${nowWatched.titleId}`)
-      .send(nowWatched)
-      .then(function (res) {
-        res.should.have.status(204);
+    WatchList.findOne({ id: 181359 })
+      .then(function (nowWatched) {
+        nowWatched.watched = true;
+        let req = chai.request(app)
+          .put(`/users/me/item/${nowWatched._id}`);
+        req.cookies = Cookies;
+        return req.send(nowWatched)
+          .then(function (res) {
+            res.should.have.status(204);
+            return WatchList.findById(nowWatched.titleId);
+          })
+          .then(function (movie) {
+            movie.watched.should.equal(nowWatched.watched);
+          });
       });
   });
   it('should remove a title from the user watchlist', function () {
-    let titleToRemove = { titleId: '596cc7382eb3f303cfdb2eeb' };
-    return chai.request(app)
-      .delete(`/users/me/item/${titleToRemove.titleId}`)
-      .send(titleToRemove)
-      .then(function (res) {
-        res.should.have.status(204);
-      });
+    console.log("Starting delete");
+    WatchList.findOne({ id: 123345 })
+      .then(function (titleToRemove) {
+        console.log("about to delete");
+        let req = chai.request(app)
+          .delete(`/users/me/item/${titleToRemove._id}`);
+        req.cookies = Cookies;
+        return req.send(titleToRemove._id)
+          .then(function (res) {
+            res.should.have.status(204);
+            return WatchList.findById(titleToRemove._id).exec();
+          })
+          .then(function (deletedTitle) {
+            should.not.exist(deletedTitle);
+          });
+      })
   });
   it('should return a list of users matching the query search term', function () {
-    let searchTerm = 'smith';
+    let searchTerm = 'cox';
     return chai.request(app)
       .get(`/users/?q=${searchTerm}`)
       .then(function (res) {
