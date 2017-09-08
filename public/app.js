@@ -63,7 +63,17 @@ function sendLoginData(oldUser, callback) {
     dataType: 'json',
     type: 'POST',
     contentType: 'application/json; charset=utf-8',
-    success: callback
+    success: callback,
+    error: function(data){
+        //get the status code
+        console.log(data);
+        if (data.status === 401) {
+            $('.login-check').removeClass('hidden');
+        }
+        if (data.status === 500) {
+            $('.fail-check').removeClass('hidden');
+        }
+    }
   };
   $.ajax(details)
     .fail(function (xhr, status, errorThrown) {

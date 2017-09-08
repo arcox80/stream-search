@@ -70,13 +70,25 @@ passport.deserializeUser(function (id, done) {
 
 app.use('/users/', usersRouter);
 
-app.post('/login',
-  passport.authenticate('local'),
-  function (req, res) {
-    console.log(req.user.apiRepr());
-    res.status(200).json(req.user.apiRepr());
-  }
-);
+app.post('/login', function(req, res, next) {
+  passport.authenticate('local', function (err, user, info) {
+    if(err) {
+      console.log(err);
+      return next(err);
+    }
+    if(!user) {
+      console.log('user not found');
+      return res.status(401).send({ success: false, message: 'authentication failed' });
+    }
+    req.logIn(user, function(err) {
+      if(err){
+        console.log(error);
+        return next(err);
+      }
+      return res.status(200).send(req.user.apiRepr());
+    })
+  })(req, res, next);
+});
 
 app.get('/logout', (req, res) => {
   req.logout();

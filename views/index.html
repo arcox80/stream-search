@@ -12,44 +12,99 @@
 </head>
 
 <body>
+  <header>
+    <nav class="navbar">
+      <div class="row mynav">
+        <div class="navbar-header col-xs-9 col-sm-offset-1 col-sm-9 col-md-offset-1 col-md-6 col-lg-offset-2 col-lg-7">
+          <a href="dashboard.html">
+            <img src="img/streamlogo2.png" class="logo" alt="Stream Search Logo">
+          </a>
+        </div>
+        <div class="col-xs-3 col-sm-1 col-md-5 col-lg-1">
+          <div class="navbar-right">
+            <form id="userLogin" class="navlogin">
+              <span>Existing Users:</span>
+              <div class="row">
+                <div class="col-xs-4">
+                  <input type="text" name="username" placeholder="Username" id="existingUsername" required />
+                </div>
+                <div class="col-xs-4">
+                  <input type="password" name="password" placeholder="Password" id="existingPassword" required />
+                </div>
+                <div class="col-xs-4">
+                  <button type="submit" class="btn form-btn">Login</button>
+                </div>
+              </div>
+              <label for="password" class="hidden login-check error">Sorry, the username or password you entered is incorrect!</label>
+              <label for="password" class="hidden fail-check error">500 status code! Internal server error.</label>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
   <div class="container-fluid">
-  <main>
-    <div>
-      <h1>Stream Search</h1>
-    </div>
-    <div class="newUsers">
-      <form id="createUser">
-        <h2>New Users Sign Up Here</h2>
-        <label for="firstName">First Name</label>
-        <input type="text" name="firstName" id="firstName" required />
-        <label for="lastName">Last Name</label>
-        <input type="text" name="lastName" id="lastName" required />
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" required/>
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" required />
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required />
-        <label for="password2">Confirm Password</label>
-        <input type="password" name="password2" id="password2" required />
-        <label for="password2" class="hidden pass-check">Passwords Do Not Match!</label>
-        <button type="submit" class="btn form-btn">Submit</button>
-      </form>
-    </div>
-    <div class="oldUsers">
-      <form id="userLogin">
-        <h2>Existing Users Login Here</h2>
-        <label for="username">Username</label>
-        <input type="text" name="username" id="existingUsername" required />
-        <label for="password">Password</label>
-        <input type="password" name="password" id="existingPassword" required />
-        <button type="submit" class="btn form-btn">Submit</button>
-      </form>
-    </div>
-  </main>
+    <main>
+      <div class="row">
+        <div>
+          <h1>Stream Search</h1>
+        </div>
+        <div class="newUsers">
+          <form id="createUser">
+            <h2>New Users Sign Up Here</h2>
+            <label for="firstName">First Name</label>
+            <input type="text" name="firstName" id="firstName" required />
+            <label for="lastName">Last Name</label>
+            <input type="text" name="lastName" id="lastName" required />
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required/>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required />
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required />
+            <label for="password2">Confirm Password</label>
+            <input type="password" name="password2" id="password2" required />
+            <button type="submit" class="btn form-btn">Submit</button>
+            <label for="password2" class="hidden pass-check">Passwords Do Not Match!</label>
+          </form>
+        </div>
+        <div class="oldUsers">
+          <form id="userLogin">
+            <h2>Existing Users Login Here</h2>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="existingUsername" required />
+            <label for="password">Password</label>
+            <input type="password" name="password" id="existingPassword" required />
+            <button type="submit" class="btn form-btn">Login</button>
+            <label for="password" class="hidden login-check error">Sorry, the username or password you entered is incorrect!</label>
+            <label for="password" class="hidden fail-check error">500 status code! Internal server error.</label>
+          </form>
+        </div>
+      </div>
+    </main>
   </div>
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <a href="https://arcox80.github.io/streamsearch/"><img src="img/streamlogo2.png" alt="Stream Search logo" class="logo bottom-space"></a>
+          <p class="thanks">This page was made possible by the <a href="https://www.justwatch.com/">JustWatch API</a></p>
+          <p>&copy; 2017 Stream Search</p>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <p class="thanks-top">Thanks for visiting Stream Search!</p>
+          <p>Click <a href="#">here</a> to see my portfolio page.</p>
+          <p class="contact">Contact:
+            <a href="https://www.linkedin.com/in/andrew-cox-4b22b79a"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x fa-inverse"></i><i class="fa fa-linkedin fa-stack-1x"></i></span></a>
+            <a href="https://github.com/arcox80"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-github fa-stack-2x fa-inverse"></i></span></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://use.fontawesome.com/ff16f58213.js"></script>
   <script src="/app.js"></script>
 </body>
 

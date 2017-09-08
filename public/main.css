@@ -35,11 +35,14 @@ p.logout {
   text-align: right;
 }
 
+.navlogin {
+  display: inline-block;
+}
+
 body {
   background-color: #0c151d;
   color: #d5d5d5;
   font-family: 'Open Sans', Arial, sans-serif;
-  padding-left: 10px;
 }
 
 a {
@@ -129,6 +132,10 @@ form label {
   margin-top: 10px;
 }
 
+label.error {
+  color: #ff7600;
+}
+
 .title-overflow {
   display: table;
   table-layout: fixed;
@@ -214,6 +221,48 @@ span.rent {
 span.buy {
   background-color: #373737;
   color: #d6d6d6;
+}
+
+footer {
+  bottom: 0;
+  width: 100%;
+  color: #fff;
+  background-color: #181b1d;
+  padding: 20px 10px 10px 10px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.thanks {
+  margin-top: 0;
+}
+
+.copyright {
+  margin-top: 0;
+}
+
+footer .row {
+  margin-bottom: 0;
+}
+
+.left {
+  text-align: left;
+}
+
+.thanks-top {
+  margin-top: 0;
+}
+
+.fa-linkedin:hover, .fa-github:hover {
+  color: gray;
+}
+
+.contact a {
+  color: #243743;
+}
+
+.bottom-space {
+  margin-bottom: 10px;
 }
 
 /* Tablet */
