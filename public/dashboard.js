@@ -325,7 +325,15 @@ function addToList() {
         console.log("Success");
       },
       dataType: 'json',
-      contentType: "application/json; charset=utf-8"
+      contentType: "application/json; charset=utf-8",
+      error: function (data) {
+        if (data.status === 403) {
+            $('.').removeClass('hidden');
+        }
+        if (data.status === 500) {
+            $('.').removeClass('hidden');
+        }
+      }
     });
     $(this).html('Saved to Watchlist');
   });

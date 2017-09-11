@@ -123,21 +123,33 @@ router.post('/me/watchlist', isAuthenticated, (req, res) => {
       return res.status(400).send(message);
     }
   }
-  const list = WatchList.create({
-    id: req.body.id,
-    title: req.body.title,
-    type: req.body.type,
-    poster: req.body.poster,
-    path: req.body.path,
-    watched: req.body.watched
-  })
-    .then(listItem => {
-      User.findById(req.user.id)
-        .then(user => {
-          user.watchlist.push(listItem);
-          return user.save();
+  User.findById(req.user.id)
+    .populate({ path: 'watchlist', select: 'id' })
+    .exec((err, user) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Internal server error' });
+      } else {
+        for (let i = 0; i < user.watchlist.length; i++) {
+          if (user.watchlist[i].id == req.body.id) {
+            const message = `This tile is already in your watchlist`;
+            return res.status(403).send(message);
+          }
+        }
+        const list = WatchList.create({
+          id: req.body.id,
+          title: req.body.title,
+          type: req.body.type,
+          poster: req.body.poster,
+          path: req.body.path,
+          watched: req.body.watched
         })
-        .then(res.status(201).send({}));
+          .then(listItem => {
+            user.watchlist.push(listItem);
+            return user.save();
+          })
+          .then(res.status(201).send({}));
+      }
     })
 });
 
@@ -150,6 +162,7 @@ router.get('/:id', isAuthenticated, (req, res) => {
     .exec(function (err, user) {
       if (!err) {
         console.log('user watchlist retrieved');
+        console.log(user);
         res.json(user)
       } else {
         console.log(err);
