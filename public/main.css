@@ -35,8 +35,13 @@ p.logout {
   text-align: right;
 }
 
-.navlogin {
-  display: inline-block;
+.container.nav-login {
+  width: 300px;
+  color: darkslategray;
+}
+
+.nav-login form {
+  width: 250px;
 }
 
 body {
