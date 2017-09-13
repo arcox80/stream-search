@@ -10,24 +10,46 @@
   display: none;
 }
 
-header {
+header.background-img {
+  background: url(img/str.jpeg) no-repeat center center;
+  background-size: cover;
+  height: 40%;
+}
+
+nav {
   background-color: #051d28;
   border-bottom: 1px solid #1d242a;
-  margin-left: -10px;
 }
 
-nav.navbar {
-  margin-bottom: 0;
+a.navbar-brand {
+  padding: 10px 15px;
 }
 
-div.row.mynav {
-  padding: 5px;
+a.align-dropdown {
+  text-align: right;
 }
 
-.container-fluid>.navbar-header {
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 5px;
+.nav>li>a {
+  color: #d5d5d5;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+  background-color: transparent;
+  color: #e2b100;
+}
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+  background-color: transparent;
+}
+
+.dropdown-menu {
+  min-width: 317px;
+  background-color: #051d28;
+  right: 1%;
+}
+
+div.container-fluid.nav-login {
+  padding-right: 15px;
 }
 
 p.logout {
@@ -35,19 +57,23 @@ p.logout {
   text-align: right;
 }
 
-.container.nav-login {
-  width: 300px;
-  color: darkslategray;
+.splash-div {
+  position: relative;
+  padding-top: 10%;
 }
 
-.nav-login form {
-  width: 250px;
+.splash-title {
+  display: none;
 }
 
 body {
   background-color: #0c151d;
   color: #d5d5d5;
   font-family: 'Open Sans', Arial, sans-serif;
+}
+
+.body-title {
+  text-align: center;
 }
 
 a {
@@ -63,6 +89,10 @@ img.logo {
   width: 125px;
 }
 
+img.brand-logo {
+  width: 75px;
+}
+
 img.offer-img {
   border-radius: 11px;
   width: 50px;
@@ -72,12 +102,12 @@ img.offer-img {
 input {
   color: #000;
 }
-
+/*
 button {
   background-color: #d5d5d5;
   margin-bottom: 5px;
 }
-
+*/
 button.form-btn {
   height: 26px;
   padding: 2px 12px;
@@ -275,11 +305,21 @@ footer .row {
   .item-img {
     max-width: 200px;
   }
-  div.navbar-header.nav-offset {
-    margin-left: 8.33333333%;
-  }
-
   input.justwatch {
     width: 33%;
+  }
+  .navbar-right {
+    margin-right: 0;
+  }
+  .splash-title {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #000;
+    font-size: 5rem;
+    color: #ffffff;
+  }
+  .body-title {
+    display: none;
   }
 }

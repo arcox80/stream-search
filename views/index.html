@@ -12,45 +12,42 @@
 </head>
 
 <body>
-  <header class="navbar">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="index.html"><img src="img/streamlogo2.png" class="logo" alt="Stream Search Logo"></a>
-        </div>
-        <div id="navbar">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Sign In<span class="caret"></span></a>
-              <div class="dropdown-menu" id="formLogin">
-                  <div class="container nav-login">
-                    <form id="userLogin">
-                      <div class="form-group">
-                        <label class="">Username</label>
-                        <input type="text" name="username" class="form-control" id="existingUsername" required />
-                      </div>
-                      <div class="form-group">
-                        <label class="">Password</label>
-                        <input type="password" name="password" class="form-control" id="existingPassword" required />
-                        <br class="">
-                      </div>
-                      <button type="submit" class="btn form-btn">Login</button>
-                    </form>
-                  </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <!--/.navbar-collapse -->
-      </div>
+  <header class="background-img">
+    <nav class="navbar">
+      <a class="navbar-brand" href="index.html"><img src="img/streamlogo2.png" alt="Stream Search Logo" class="brand-logo"></a>
+      <ul class="nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle nav-float align-dropdown" data-toggle="dropdown" role="button">Sign In<span class="caret"></span></a>
+          <div class="dropdown-menu" id="formLogin">
+            <div class="container-fluid nav-login">
+              <form id="userLogin">
+                <div class="form-group">
+                  <label class="">Username</label>
+                  <input type="text" name="username" class="form-control" id="existingUsername" required />
+                </div>
+                <div class="form-group">
+                  <label class="">Password</label>
+                  <input type="password" name="password" class="form-control" id="existingPassword" required />
+                  <br class="">
+                </div>
+                <button type="submit" class="btn form-btn">Login</button>
+              </form>
+            </div>
+          </div>
+        </li>
+      </ul>
     </nav>
+
+    <div class="container">
+      <div class="splash-div">
+        <h1 class="splash-title">Welcome to Stream Search!</h1>
+      </div>
+    </div>
   </header>
   <div class="container-fluid">
     <main>
+      <h1 class="body-title">Welcome to Stream Search!</h1>
       <div class="row">
-        <div>
-          <h1>Stream Search</h1>
-        </div>
         <div class="newUsers">
           <form id="createUser">
             <h2>New Users Sign Up Here</h2>
