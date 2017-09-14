@@ -10,15 +10,42 @@
   display: none;
 }
 
+a {
+  color: #78a6b8;
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+}
+
+img.logo {
+  width: 125px;
+}
+
+img.brand-logo {
+  width: 75px;
+}
+
+img.offer-img {
+  border-radius: 11px;
+  width: 50px;
+  height: 50px;
+}
+
+input {
+  color: #000;
+}
+
 header.background-img {
-  background: url(img/str.jpeg) no-repeat center center;
+  background: url(img/str.jpg) no-repeat center center;
   background-size: cover;
   height: 40%;
   min-height: 225px;
 }
 
 nav {
-  background-color: #051d28;
+  background-color: rgb(24, 37, 49);
   border-bottom: 1px solid #1d242a;
 }
 
@@ -47,6 +74,7 @@ a.align-dropdown {
   min-width: 317px;
   background-color: #051d28;
   right: 1%;
+  border: 1px solid #ccc;
 }
 
 div.container-fluid.nav-login {
@@ -67,53 +95,67 @@ p.logout {
   display: none;
 }
 
+.splash-subtitle {
+  display: none;
+}
+
 body {
   background-color: #0c151d;
   color: #d5d5d5;
   font-family: 'Open Sans', Arial, sans-serif;
 }
 
-.body-title {
+.mobile-header {
   text-align: center;
+  background: rgb(24,37,49);
+  margin: -20px -15px auto -15px;
+  padding: 15px;
 }
 
-a {
-  color: #78a6b8;
-  text-decoration: none;
+.body-title {
+  font-weight: bold;
+  font-size: 4rem;
+  color: #ffffff;
 }
 
-img {
-  width: 100%;
+.body-subtitle {
+  font-size: 1.8rem;
+  font-style: italic;
 }
 
-img.logo {
-  width: 125px;
-}
-
-img.brand-logo {
-  width: 75px;
-}
-
-img.offer-img {
-  border-radius: 11px;
-  width: 50px;
-  height: 50px;
-}
-
-input {
+.first-call {
+  background: #ccc;
   color: #000;
+  padding-bottom: 15px;
 }
-/*
-button {
-  background-color: #d5d5d5;
-  margin-bottom: 5px;
+
+.newUsers {
+  background-color: #0c151d;
+  border: 1px solid #fff;
+  color: #d5d5d5;
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  max-width: 267px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: auto;
 }
-*/
+
 button.form-btn {
   height: 26px;
   padding: 2px 12px;
   color: #183f4e;
   vertical-align: top;
+}
+
+.intro-pic {
+  padding-top: 18px;
+  text-align: center;
+}
+
+img.intro-img {
+  width: auto;
+  max-height: 226px;
 }
 
 div.clarity-center {
@@ -263,7 +305,7 @@ footer {
   bottom: 0;
   width: 100%;
   color: #fff;
-  background-color: #181b1d;
+  background-color: rgb(24, 37, 49);
   padding: 20px 10px 10px 10px;
   margin-top: 20px;
   text-align: center;
@@ -320,7 +362,13 @@ footer .row {
     font-size: 5rem;
     color: #ffffff;
   }
-  .body-title {
+  .splash-subtitle {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    color: #ffffff;
+  }
+  .mobile-header {
     display: none;
   }
 }

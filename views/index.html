@@ -12,6 +12,7 @@
 </head>
 
 <body>
+
   <header class="background-img">
     <nav class="navbar">
       <a class="navbar-brand" href="index.html"><img src="img/streamlogo2.png" alt="Stream Search Logo" class="brand-logo"></a>
@@ -31,57 +32,81 @@
                   <br class="">
                 </div>
                 <button type="submit" class="btn form-btn">Login</button>
+                <label for="password" class="hidden login-check error">Sorry, the username or password you entered is incorrect!</label>
+                <label for="password" class="hidden fail-check error">500 status code! Internal server error.</label>
               </form>
             </div>
           </div>
         </li>
       </ul>
     </nav>
-
     <div class="container">
       <div class="splash-div">
         <h1 class="splash-title">Welcome to Stream Search!</h1>
+        <h2 class="splash-subtitle">Where we find the streaming service for your show or movie, so you don't have to.</h2>
       </div>
     </div>
   </header>
+
   <div class="container-fluid">
     <main>
-      <h1 class="body-title">Welcome to Stream Search!</h1>
-      <div class="row">
-        <div class="newUsers">
-          <form id="createUser">
-            <h2>New Users Sign Up Here</h2>
-            <label for="firstName">First Name</label>
-            <input type="text" name="firstName" id="firstName" required />
-            <label for="lastName">Last Name</label>
-            <input type="text" name="lastName" id="lastName" required />
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required/>
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" required />
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required />
-            <label for="password2">Confirm Password</label>
-            <input type="password" name="password2" id="password2" required />
-            <button type="submit" class="btn form-btn">Submit</button>
-            <label for="password2" class="hidden pass-check">Passwords Do Not Match!</label>
-          </form>
+      <section class="mobile-header">
+        <h1 class="body-title">Welcome to Stream Search!</h1>
+        <h2 class="body-subtitle">Where we find the streaming service for your show or movie, so you don't have to.</h2>
+      </section>
+      <section class="row first-call">
+        <div class="col-xs-12">
+          <div class="text-center">
+            <h3>Sign up now to get started!</h3>
+            <h5>Or keep scrolling to learn more.</h5>
+          </div>
+          <div class="row">
+            <div class="newUsers">
+              <form id="createUser">
+                <h4 class="font-weight-bold text-center">New Users Sign Up Here!</h4>
+                <label for="firstName">First Name</label>
+                <input type="text" name="firstName" id="firstName" required />
+                <label for="lastName">Last Name</label>
+                <input type="text" name="lastName" id="lastName" required />
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required/>
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required />
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required />
+                <label for="password2">Confirm Password</label>
+                <input type="password" name="password2" id="password2" required />
+                <button type="submit" class="btn form-btn">Submit</button>
+                <label for="password2" class="hidden pass-check">Passwords Do Not Match!</label>
+              </form>
+            </div>
+          </div>
         </div>
-        <div class="oldUsers">
-          <form id="userLogin">
-            <h2>Existing Users Login Here</h2>
-            <label for="username">Username</label>
-            <input type="text" name="username" id="existingUsername" required />
-            <label for="password">Password</label>
-            <input type="password" name="password" id="existingPassword" required />
-            <button type="submit" class="btn form-btn">Login</button>
-            <label for="password" class="hidden login-check error">Sorry, the username or password you entered is incorrect!</label>
-            <label for="password" class="hidden fail-check error">500 status code! Internal server error.</label>
-          </form>
+      </section>
+      <section class="row intro">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 intro-pic">
+              <img src="img/intro-choices.jpg" class="intro-img" alt="Silhouette of man standing in front of a wall of tv screens unable to choose.">
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 intro-text">
+              <h3>Wait, what is Stream Search?</h3>
+              <p>Figuring out what show or movie to watch is hard enough, but once you know what you want to watch, you then
+                have to figure out how to watch it.</p>
+              <ul>
+                <li>Is it available for rent or purchase online?</li>
+                <li>Is it available on a streaming service I’m already paying for?</li>
+                <li>Is it available on a free streaming service with commercials?</li>
+              </ul>
+              <p>This is where Stream Search comes in. Simply enter the title of the movie or show you want to watch, and we
+                will tell you if it can be found online and the ways you can watch it.</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </main>
   </div>
+
   <footer class="footer">
     <div class="container">
       <div class="row">
@@ -94,13 +119,18 @@
           <p class="thanks-top">Thanks for visiting Stream Search!</p>
           <p>Click <a href="#">here</a> to see my portfolio page.</p>
           <p class="contact">Contact:
-            <a href="https://www.linkedin.com/in/andrew-cox-4b22b79a"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x fa-inverse"></i><i class="fa fa-linkedin fa-stack-1x"></i></span></a>
-            <a href="https://github.com/arcox80"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-github fa-stack-2x fa-inverse"></i></span></a>
+            <a href="https://www.linkedin.com/in/andrew-cox-4b22b79a">
+              <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x fa-inverse"></i><i class="fa fa-linkedin fa-stack-1x"></i></span>
+            </a>
+            <a href="https://github.com/arcox80">
+              <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-github fa-stack-2x fa-inverse"></i></span>
+            </a>
           </p>
         </div>
       </div>
     </div>
   </footer>
+
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://use.fontawesome.com/ff16f58213.js"></script>
