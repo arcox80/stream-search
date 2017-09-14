@@ -41,7 +41,6 @@ header.background-img {
   background: url(img/str.jpg) no-repeat center center;
   background-size: cover;
   height: 40%;
-  min-height: 225px;
 }
 
 nav {
@@ -88,7 +87,7 @@ p.logout {
 
 .splash-div {
   position: relative;
-  padding-top: 10%;
+  padding-top: 30px;
 }
 
 .splash-title {
@@ -125,6 +124,10 @@ body {
 
 .first-call {
   background: #ccc;
+  background: -webkit-radial-gradient(#fff, #ccc, #0c151d); /* Safari 5.1 to 6.0 */
+  background: -o-radial-gradient(#fff, #ccc, #0c151d); /* For Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(#fff, #ccc, #0c151d); /* For Firefox 3.6 to 15 */
+  background: radial-gradient(#fff, #ccc, #0c151d); /* Standard syntax */
   color: #000;
   padding-bottom: 15px;
 }
@@ -150,12 +153,12 @@ button.form-btn {
 
 .intro-pic {
   padding-top: 18px;
-  text-align: center;
 }
 
-img.intro-img {
-  width: auto;
-  max-height: 226px;
+.intro-question {
+  font-style: italic;
+  color: #fff;
+  font-weight: bolder;
 }
 
 div.clarity-center {
@@ -354,6 +357,9 @@ footer .row {
   .navbar-right {
     margin-right: 0;
   }
+  header {
+    min-height: 432px;
+  }
   .splash-title {
     display: block;
     text-align: center;
@@ -366,6 +372,7 @@ footer .row {
     display: block;
     text-align: center;
     font-style: italic;
+    text-shadow: 2px 2px 2px #000;
     color: #ffffff;
   }
   .mobile-header {
