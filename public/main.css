@@ -122,12 +122,15 @@ body {
   font-style: italic;
 }
 
-.first-call {
+.gradient {
   background: #ccc;
   background: -webkit-radial-gradient(#fff, #ccc, #0c151d); /* Safari 5.1 to 6.0 */
   background: -o-radial-gradient(#fff, #ccc, #0c151d); /* For Opera 11.6 to 12.0 */
   background: -moz-radial-gradient(#fff, #ccc, #0c151d); /* For Firefox 3.6 to 15 */
   background: radial-gradient(#fff, #ccc, #0c151d); /* Standard syntax */
+}
+
+.first-call {
   color: #000;
   padding-bottom: 15px;
 }
@@ -159,7 +162,26 @@ button.form-btn {
   font-style: italic;
   color: #fff;
   font-weight: bolder;
+  text-align: center;
 }
+
+.search-section {
+  text-align: center;
+}
+
+.search-img-div {
+  margin-top: 15px;
+}
+
+.search-img {
+  border: 3px solid #fff;
+}
+
+.search-text-div {
+  background: #0c151d;
+  margin-top: 15px;
+}
+
 
 div.clarity-center {
   text-align: center;
