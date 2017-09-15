@@ -147,6 +147,10 @@ body {
   margin: auto;
 }
 
+input#password2 {
+  margin-bottom: 10px;
+}
+
 button.form-btn {
   height: 26px;
   padding: 2px 12px;
