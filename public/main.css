@@ -392,7 +392,7 @@ footer .row {
   .navbar-right {
     margin-right: 0;
   }
-  header {
+  header.header-height {
     min-height: 432px;
   }
   .splash-title {

@@ -133,139 +133,139 @@ function displayResults() {
     });
     if (item.offers) {
       for (let i = 0; i < item.offers.length; i++) {
-    let htmlItemOffer = $('.js-item-offers.templ').clone();
-    if (item.offers[i].presentation_type === 'sd') {
-      var found = item.offers.find(function(offer){
-        if(offer.presentation_type === 'hd' && offer.provider_id === item.offers[i].provider_id)
-          return true;
-      })
-      if(found)
-        continue;
-    }
+        let htmlItemOffer = $('.js-item-offers.templ').clone();
+        if (item.offers[i].presentation_type === 'sd') {
+          var found = item.offers.find(function (offer) {
+            if (offer.presentation_type === 'hd' && offer.provider_id === item.offers[i].provider_id)
+              return true;
+          })
+          if (found)
+            continue;
+        }
         console.log(item.title);
-        console.log (item.offers[i]);
+        console.log(item.offers[i]);
         let providerIdImg;
-          let text;
-          switch (item.offers[i].provider_id) {
-            case 2:
-              text = 'apple-itunes.jpeg';
-              break;
-            case 3:
-              text = 'google-play-movies.jpeg';
-              break;
-            case 7:
-              text = 'vudu.jpeg';
-              break;
-            case 8:
-              text = 'netflix.jpeg';
-              break;
-            case 9:
-              text = 'amazon-prime-instant-video.jpeg';
-              break;
-            case 10:
-              text = 'amazon-instant-video.jpeg';
-              break;
-            case 11:
-              text = 'mubi.jpeg';
-              break;
-            case 12:
-              text = 'crackle.jpeg';
-              break;
-            case 14:
-              text = 'realeyz.jpeg';
-              break;
-            case 15:
-              text = 'hulu.jpeg';
-              break;
-            case 18:
-              text = 'playstation.jpeg';
-              break;
-            case 25:
-              text = 'fandor.jpeg';
-              break;
-            case 27:
-              text = 'hbo-now.jpeg';
-              break;
-            case 31:
-              text = 'hbo-go.jpeg';
-              break;
-            case 34:
-              text = 'epix.jpeg';
-              break;
-            case 37:
-              text = 'showtime.jpeg';
-              break;
-            case 43:
-              text = 'starz.jpeg';
-              break;
-            case 60:
-              text = 'fandango.jpeg';
-              break;
-            case 68:
-              text = 'microsoft-store.jpeg';
-              break;
-            case 73:
-              text = 'tubi-tv.jpeg';
-              break;
-            case 78:
-              text = 'cbs.jpeg';
-              break;
-            case 79:
-              text = 'nbc.jpeg';
-              break;
-            case 80:
-              text = 'amc.jpeg';
-              break;
-            case 83:
-              text = 'the-cw.jpeg';
-              break;
-            case 87:
-              text = 'acorn-tv.jpeg';
-              break;
-            case 92:
-              text = 'yahoo-view.jpeg';
-              break;
-            case 99:
-              text = 'shudder.jpeg';
-              break;
-            case 100:
-              text = 'guidedoc.jpeg';
-              break;
-            case 102:
-              text = 'filmstruck.jpeg';
-              break;
-            case 105:
-              text = 'fandangonow.jpeg';
-              break;
-            case 123:
-              text = 'fxnow.jpeg';
-              break;
-            case 139:
-              text = 'max-go.jpeg';
-              break;
-            case 143:
-              text = 'sundance-now.jpeg';
-              break;
-            case 148:
-              text = 'abc.jpeg';
-              break;
-            case 151:
-              text = 'brtibox.jpeg';
-              break;
-            case 155:
-              text = 'history.jpeg';
-              break;
-            case 156:
-              text = 'aande.jpeg';
-              break;
-            case 157:
-              text = 'lifetime.jpeg';
-              break;
-            default:
-              text = 'placeholder.jpg';
-          }
-          providerIdImg = text;
-        
+        let text;
+        switch (item.offers[i].provider_id) {
+          case 2:
+            text = 'apple-itunes.jpeg';
+            break;
+          case 3:
+            text = 'google-play-movies.jpeg';
+            break;
+          case 7:
+            text = 'vudu.jpeg';
+            break;
+          case 8:
+            text = 'netflix.jpeg';
+            break;
+          case 9:
+            text = 'amazon-prime-instant-video.jpeg';
+            break;
+          case 10:
+            text = 'amazon-instant-video.jpeg';
+            break;
+          case 11:
+            text = 'mubi.jpeg';
+            break;
+          case 12:
+            text = 'crackle.jpeg';
+            break;
+          case 14:
+            text = 'realeyz.jpeg';
+            break;
+          case 15:
+            text = 'hulu.jpeg';
+            break;
+          case 18:
+            text = 'playstation.jpeg';
+            break;
+          case 25:
+            text = 'fandor.jpeg';
+            break;
+          case 27:
+            text = 'hbo-now.jpeg';
+            break;
+          case 31:
+            text = 'hbo-go.jpeg';
+            break;
+          case 34:
+            text = 'epix.jpeg';
+            break;
+          case 37:
+            text = 'showtime.jpeg';
+            break;
+          case 43:
+            text = 'starz.jpeg';
+            break;
+          case 60:
+            text = 'fandango.jpeg';
+            break;
+          case 68:
+            text = 'microsoft-store.jpeg';
+            break;
+          case 73:
+            text = 'tubi-tv.jpeg';
+            break;
+          case 78:
+            text = 'cbs.jpeg';
+            break;
+          case 79:
+            text = 'nbc.jpeg';
+            break;
+          case 80:
+            text = 'amc.jpeg';
+            break;
+          case 83:
+            text = 'the-cw.jpeg';
+            break;
+          case 87:
+            text = 'acorn-tv.jpeg';
+            break;
+          case 92:
+            text = 'yahoo-view.jpeg';
+            break;
+          case 99:
+            text = 'shudder.jpeg';
+            break;
+          case 100:
+            text = 'guidedoc.jpeg';
+            break;
+          case 102:
+            text = 'filmstruck.jpeg';
+            break;
+          case 105:
+            text = 'fandangonow.jpeg';
+            break;
+          case 123:
+            text = 'fxnow.jpeg';
+            break;
+          case 139:
+            text = 'max-go.jpeg';
+            break;
+          case 143:
+            text = 'sundance-now.jpeg';
+            break;
+          case 148:
+            text = 'abc.jpeg';
+            break;
+          case 151:
+            text = 'brtibox.jpeg';
+            break;
+          case 155:
+            text = 'history.jpeg';
+            break;
+          case 156:
+            text = 'aande.jpeg';
+            break;
+          case 157:
+            text = 'lifetime.jpeg';
+            break;
+          default:
+            text = 'placeholder.jpg';
+        }
+        providerIdImg = text;
+
 
         if (item.offers[i].monetization_type === 'flatrate') {
           htmlItem.find('.js-offer-type-sub .js-offer-bar').html('STREAM');
@@ -309,7 +309,7 @@ function displayResults() {
 }
 
 function addToList() {
-  $('.results').on('click', '.js-addToWatchList', function (event) {
+  $('.results, .js-watchlist').on('click', '.js-addToWatchList', function (event) {
     var jsonData = {};
     jsonData['id'] = $(this).attr('media-id');
     jsonData['title'] = $(this).attr('title');
@@ -328,10 +328,10 @@ function addToList() {
       contentType: "application/json; charset=utf-8",
       error: function (data) {
         if (data.status === 403) {
-            $('.').removeClass('hidden');
+          $('.').removeClass('hidden');
         }
         if (data.status === 500) {
-            $('.').removeClass('hidden');
+          $('.').removeClass('hidden');
         }
       }
     });
@@ -403,9 +403,18 @@ function usernameClick() {
         imgUrl = imgUrl.replace("{profile}", "s166");
         htmlItem.find('.js-item-img').attr('src', "https://www.justwatch.com/images" + imgUrl);
         htmlItem.find('.js-item-link').attr('href', "https://www.justwatch.com" + item.path);
+        htmlItem.find('.js-addToWatchList').attr({
+          'media-id': item.id,
+          'title': item.title,
+          'poster': item.poster,
+          'object-type': item.type,
+          'path': item.path
+        });
         htmlItem.removeClass('templ');
-        $('.js-watchlist-results').append(htmlItem);
+          $('.js-watchlist-results').append(htmlItem);
         $('.js-your-watchlist').html(firstName + "'s Watchlist");
+        $('.js-user-options').addClass('hidden');
+        $('.js-addButton').removeClass('hidden');
         $('.js-watchlist').show();
       });
     });

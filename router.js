@@ -158,7 +158,7 @@ router.get('/:id', isAuthenticated, (req, res) => {
   const uid = (req.params.id === 'me') ? req.user.id : req.params.id;
   return User
     .findById(uid)
-    .populate({ path: 'watchlist', select: 'title poster path watched' })
+    .populate({ path: 'watchlist', select: 'title poster path watched id type' })
     .exec(function (err, user) {
       if (!err) {
         console.log('user watchlist retrieved');
