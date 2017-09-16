@@ -158,8 +158,12 @@ button.form-btn {
   vertical-align: top;
 }
 
-.intro-pic {
-  padding-top: 18px;
+.intro-paragraph {
+  padding-top: 10px;
+}
+
+.intro-img {
+  margin-top: 10px;
 }
 
 .intro-question {
@@ -169,18 +173,35 @@ button.form-btn {
   text-align: center;
 }
 
+.main-section {
+  padding: 20px 10px;
+  text-align: justify;
+}
+
 .feature-section {
-  text-align: center;
+  text-align: justify;
   padding-top: 20px;
 }
 
 .feature-img-div {
   margin-top: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: #ccc;
+  background: -webkit-radial-gradient(#fff, #ccc, #667); /* Safari 5.1 to 6.0 */
+  background: -o-radial-gradient(#fff, #ccc, #667); /* For Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(#fff, #ccc, #667); /* For Firefox 3.6 to 15 */
+  background: radial-gradient(#fff, #ccc, #667); /* Standard syntax */
 }
 
 .feature-text-div {
   background: #0c151d;
   padding: 20px;
+}
+
+.first-text-div {
+  padding: 0 15px 15px 15px;
+  background: #0c151d;
 }
 
 .border-box {
@@ -195,10 +216,7 @@ button.form-btn {
 
 .screenshot {
   border: 3px solid #fff;
-}
-
-.last-section {
-  padding-bottom: 20px;
+  box-shadow: 0 11px 10px -1px #1e1e1e;
 }
 
 div.clarity-center {
