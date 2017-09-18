@@ -147,7 +147,7 @@ function displayResults() {
       for (let i = 0; i < item.offers.length; i++) {
         let htmlItemOffer = $('.js-item-offers.templ').clone();
         if (item.offers[i].presentation_type === 'sd') {
-          var found = item.offers.find(function (offer) {
+          let found = item.offers.find(function (offer) {
             if (offer.presentation_type === 'hd' && offer.provider_id === item.offers[i].provider_id)
               return true;
           })
@@ -281,24 +281,28 @@ function displayResults() {
 
 
         if (item.offers[i].monetization_type === 'flatrate') {
+          htmlItem.find('.js-offer-type-sub').addClass('offers');
           htmlItem.find('.js-offer-type-sub .js-offer-bar').html('STREAM');
           htmlItemOffer.find('.js-offer-link').attr('href', item.offers[i].urls.standard_web);
           htmlItemOffer.find('.js-offer-img').attr('src', 'img/' + providerIdImg);
           htmlItemOffer.find('.js-presentation').html(item.offers[i].presentation_type.toUpperCase());
           htmlItem.find('.js-sub-row').append(htmlItemOffer);
         } else if (item.offers[i].monetization_type === 'rent') {
+          htmlItem.find('.js-offer-type-rent').addClass('offers');
           htmlItem.find('.js-offer-type-rent .js-offer-bar').html('RENT');
           htmlItemOffer.find('.js-offer-link').attr('href', item.offers[i].urls.standard_web);
           htmlItemOffer.find('.js-offer-img').attr('src', 'img/' + providerIdImg);
           htmlItemOffer.find('.js-presentation').html(item.offers[i].presentation_type.toUpperCase());
           htmlItem.find('.js-rent-row').append(htmlItemOffer);
         } else if (item.offers[i].monetization_type === 'cinema') {
+          htmlItem.find('.js-offer-type-cinema').addClass('offers');
           htmlItem.find('.js-offer-type-cinema .js-offer-bar').html('CINEMA');
           htmlItemOffer.find('.js-offer-link').attr('href', item.offers[i].urls.standard_web);
           htmlItemOffer.find('.js-offer-img').attr('src', 'img/' + providerIdImg);
           htmlItemOffer.find('.js-presentation').html('TICKET');
           htmlItem.find('.js-cinema-row').append(htmlItemOffer);
         } else {
+          htmlItem.find('.js-offer-type-buy').addClass('offers');
           htmlItem.find('.js-offer-type-buy .js-offer-bar').html('BUY');
           htmlItemOffer.find('.js-offer-link').attr('href', item.offers[i].urls.standard_web);
           htmlItemOffer.find('.js-offer-img').attr('src', 'img/' + providerIdImg);

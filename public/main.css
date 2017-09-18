@@ -310,11 +310,17 @@ div.item-img {
 }
 
 .result-container {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+}
+
+.pad {
+  padding-left: 15px;
 }
 
 .offers {
+  display: inline-block;
   margin-top: 10px;
+  margin-right: 10px;
 }
 
 .offer-rows {
@@ -350,6 +356,20 @@ span.rent {
 span.buy {
   background-color: #373737;
   color: #d6d6d6;
+}
+
+span.presentation {
+  display: block;
+  text-align: center;
+}
+
+div.alignment {
+  float: left;
+  margin-right: 10px;
+}
+
+div.alignment:last-child {
+  margin-right: 0;
 }
 
 footer {
