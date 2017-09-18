@@ -10,7 +10,6 @@ if (localStorage.user) {
 function retrieveWatchList() {
   $.getJSON('/users/me/', function (json) {
     const listArray = json.watchlist;
-    console.log(listArray);
     listArray.forEach(function (item) {
       let htmlItem = $('.js-list-item.templ').clone();
       htmlItem.find('.js-item-title').append(item.title);
@@ -32,8 +31,9 @@ function retrieveWatchList() {
       $('.js-watchlist-results').append(htmlItem);
       $('.js-your-watchlist').html('Your Watchlist');
       $('.js-watchlist').show();
+      $('.js-returnButton').addClass('hidden');
+      $('.js-welcome').removeClass('hidden');
     });
-    console.log("Watchlist retrieved");
   });
 }
 
@@ -53,7 +53,6 @@ function markAsWatched() {
       $(this).addClass('watched');
       $(this).attr('title', 'Already Watched');
       $(this).html(`<i class="glyphicon glyphicon-ok js-glyph-ok"></i>`);
-
     }
     $.ajax({
       type: "PUT",
@@ -119,6 +118,8 @@ function searchSubmit() {
         $('.js-watchlist').hide();
         $('.js-userResults').hide();
         $('.js-userResults-list').html('');
+        $('.js-returnButton').removeClass('hidden');
+        $('.js-welcome').addClass('hidden');
       } else {
         displayResults();
       }
@@ -317,7 +318,8 @@ function displayResults() {
     $('.js-watchlist').hide();
     $('.js-userResults').hide();
     $('.js-userResults-list').html('');
-    //show link/button to return to watchlist
+    $('.js-returnButton').removeClass('hidden');
+    $('.js-welcome').addClass('hidden');
   });
 }
 
@@ -380,6 +382,8 @@ function userSearchSubmit() {
         $('.js-watchlist-results').html('');
         $('.results').hide();
         $('.js-results-container').html('');
+        $('.js-returnButton').removeClass('hidden');
+        $('.js-welcome').addClass('hidden');
       } else {
         displayUserResults();
       }
@@ -408,6 +412,8 @@ function displayUserResults() {
   $('.js-watchlist-results').html('');
   $('.results').hide();
   $('.js-results-container').html('');
+  $('.js-returnButton').removeClass('hidden');
+  $('.js-welcome').addClass('hidden');
 }
 
 function usernameClick() {
@@ -447,7 +453,6 @@ function usernameClick() {
 
 
 $(function () {
-  console.log(state.user);
   $('.js-welcome').append(` ${state.user.firstName}!`);
   retrieveWatchList();
   searchSubmit();
