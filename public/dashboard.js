@@ -108,9 +108,20 @@ function searchSubmit() {
     $('.js-result-container').empty();
     let query = $('#search').val();
     searchTitlefromApi(query, function (data) {
-      console.log(data);
+      console.log(data.items);
       state.movies = data.items;
-      displayResults();
+      if (data.items.length === 0) {
+        $('.js-noResults').text(`Sorry, there were no results for your search of "${query}"`);
+        $('.js-noResults').removeClass('hidden');
+        $('.results').removeClass('hidden');
+        $('.results').show();
+        $('.js-watchlist-results').html('');
+        $('.js-watchlist').hide();
+        $('.js-userResults').hide();
+        $('.js-userResults-list').html('');
+      } else {
+        displayResults();
+      }
     });
   });
 }
