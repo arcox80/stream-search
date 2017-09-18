@@ -153,8 +153,6 @@ function displayResults() {
           if (found)
             continue;
         }
-        console.log(item.title);
-        console.log(item.offers[i]);
         let providerIdImg;
         let text;
         switch (item.offers[i].provider_id) {
@@ -311,6 +309,7 @@ function displayResults() {
     }
 
     htmlItem.removeClass('templ');
+    $('.js-noResults').addClass('hidden');
     $('.results').removeClass('hidden');
     $('.results').show();
     $('.js-result-container').append(htmlItem);
@@ -372,7 +371,18 @@ function userSearchSubmit() {
     searchUsers(query, function (data) {
       state.userResults = data;
       $('.js-userResults-list').html('');
-      displayUserResults();
+      if (state.userResults.length === 0) {
+        $('.js-noUsers').text(`Sorry, no users were found based on your search of "${query}"`);
+        $('.js-noUsers').removeClass('hidden');
+        $('.js-userResults').removeClass('hidden');
+        $('.js-userResults').show();
+        $('.js-watchlist').hide();
+        $('.js-watchlist-results').html('');
+        $('.results').hide();
+        $('.js-results-container').html('');
+      } else {
+        displayUserResults();
+      }
     });
   });
 }
@@ -393,11 +403,11 @@ function displayUserResults() {
     $('.js-userResults').removeClass('hidden');
     $('.js-userResults').show();
   });
+  $('.js-noUsers').addClass('hidden');
   $('.js-watchlist').hide();
   $('.js-watchlist-results').html('');
   $('.results').hide();
   $('.js-results-container').html('');
-  console.log(state);
 }
 
 function usernameClick() {
