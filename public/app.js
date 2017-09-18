@@ -57,7 +57,6 @@ function userLogin() {
       password: $('#existingPassword').val()
     };
     sendLoginData(user, function (data) {
-      console.log('User logged in', data);
       localStorage.user = JSON.stringify(data);
       window.location = 'dashboard.html';
     });

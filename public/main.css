@@ -52,10 +52,6 @@ a.align-dropdown {
   text-align: right;
 }
 
-.nav>li>a {
-  color: #d5d5d5;
-}
-
 .nav>li>a:focus, .nav>li>a:hover {
   background-color: transparent;
   color: #e2b100;
