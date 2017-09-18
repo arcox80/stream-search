@@ -20,11 +20,11 @@ img {
 }
 
 img.logo {
-  width: 125px;
+  width: 105px;
 }
 
-img.brand-logo {
-  width: 75px;
+a.navbar-brand {
+  padding: 5px 15px;
 }
 
 img.offer-img {
@@ -46,10 +46,6 @@ header.background-img {
 nav {
   background-color: rgb(24, 37, 49);
   border-bottom: 1px solid #1d242a;
-}
-
-a.navbar-brand {
-  padding: 10px 15px;
 }
 
 a.align-dropdown {
@@ -80,9 +76,8 @@ div.container-fluid.nav-login {
   padding-right: 15px;
 }
 
-p.logout {
-  margin-right: 8.33333%;
-  text-align: right;
+ul.nav.navbar-right {
+  float: right;
 }
 
 .splash-div {
@@ -106,7 +101,6 @@ body {
 
 .mobile-header {
   text-align: center;
-  background: rgb(24,37,49);
   margin: -20px -15px auto -15px;
   padding: 15px;
 }

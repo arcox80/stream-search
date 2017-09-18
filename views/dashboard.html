@@ -16,27 +16,20 @@
 
   <header>
     <nav class="navbar">
-      <div class="row mynav">
-        <div class="navbar-header col-xs-9 col-sm-offset-1 col-sm-9 col-md-offset-1 col-md-9 col-lg-offset-2 col-lg-7">
-          <a href="dashboard.html">
-            <img src="img/streamlogo2.png" class="logo" alt="Stream Search Logo">
-          </a>
-        </div>
-        <div class="col-xs-3 col-sm-1 col-md-1 col-lg-1">
-          <p class="logout navbar-text navbar-right">
-            <a href="/logout">Logout</a>
-          </p>
-        </div>
-      </div>
+        <a class="navbar-brand" href="dashboard.html"><img src="img/streamlogo2.png" class="logo" alt="Stream Search Logo"></a>
+      <ul class="nav navbar-right">
+        <li><a href="/logout" class="navbar-right">Logout</a></li>
+      </ul>
     </nav>
   </header>
 
 
-  <main>
+  <main class="container-fluid">
     <div>
       <h1 class="js-welcome col-sm-offset-1 col-md-offset-1 col-lg-offset-2">Welcome</h1>
     </div>
 
+    <!-- Search Section -->
     <div class="row">
       <div class="col-xs-12 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
         <form id="searchTitle">
@@ -55,7 +48,7 @@
       </div>
     </div>
 
-
+    <!-- Dashboard Watchlist Section -->
     <div class="js-watchlist">
       <h3 class="col-sm-offset-1 col-md-offset-1 col-lg-offset-2 js-your-watchlist">Your Watchlist</h3>
 
@@ -93,7 +86,7 @@
       </div>
     </div>
 
-
+    <!-- User Search Results Section -->
     <div class="js-userResults row hidden">
       <div class="col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8 ">
         <h3>User Search Results</h3>
@@ -107,7 +100,7 @@
       </div>
     </div>
 
-
+    <!-- Title Search Results Section -->
     <div class="results hidden">
       <div>
         <h3 class="col-sm-offset-1 col-md-offset-1 col-lg-offset-2">Search Results</h3>

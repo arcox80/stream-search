@@ -261,6 +261,9 @@ function displayResults() {
           case 157:
             text = 'lifetime.jpeg';
             break;
+          case 175:
+            text = 'netflix-kids.jpeg';
+            break;
           default:
             text = 'placeholder.jpg';
         }
@@ -411,7 +414,7 @@ function usernameClick() {
           'path': item.path
         });
         htmlItem.removeClass('templ');
-          $('.js-watchlist-results').append(htmlItem);
+        $('.js-watchlist-results').append(htmlItem);
         $('.js-your-watchlist').html(firstName + "'s Watchlist");
         $('.js-user-options').addClass('hidden');
         $('.js-addButton').removeClass('hidden');
@@ -502,5 +505,5 @@ $(function () {
 155 - history
 156 - a&e
 157 - lifetime
-
+175 - netflix kids
 */
