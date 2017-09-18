@@ -261,8 +261,9 @@ form label {
   margin-top: 10px;
 }
 
-label.error {
+.error {
   color: #ff7600;
+  text-align: center;
 }
 
 .title-overflow {
@@ -284,12 +285,6 @@ span.item-title {
 
 .list-item {
   margin-bottom: 10px;
-}
-
-p.warning {
-  color: white;
-  background-color: darkred;
-  text-align: center;
 }
 
 div.item-img {
