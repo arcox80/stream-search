@@ -36,7 +36,15 @@ function sendUserData(newUser, callback) {
     dataType: 'json',
     type: 'POST',
     contentType: "application/json; charset=utf-8",
-    success: callback
+    success: callback,
+    error: function (data) {
+      if (data.status === 422) {
+        $('.js-existingUser').removeClass('hidden');
+      }
+      if (data.status === 409) {
+        $('.js-existingEmail').removeClass('hidden');
+      }
+    }
   };
   $.ajax(details);
 }
@@ -58,21 +66,21 @@ function userLogin() {
 
 function sendLoginData(oldUser, callback) {
   let details = {
-    url:'/login',
+    url: '/login',
     data: JSON.stringify(oldUser),
     dataType: 'json',
     type: 'POST',
     contentType: 'application/json; charset=utf-8',
     success: callback,
-    error: function(data){
-        //get the status code
-        console.log(data);
-        if (data.status === 401) {
-            $('.login-check').removeClass('hidden');
-        }
-        if (data.status === 500) {
-            $('.fail-check').removeClass('hidden');
-        }
+    error: function (data) {
+      //get the status code
+      console.log(data);
+      if (data.status === 401) {
+        $('.login-check').removeClass('hidden');
+      }
+      if (data.status === 500) {
+        $('.fail-check').removeClass('hidden');
+      }
     }
   };
   $.ajax(details)

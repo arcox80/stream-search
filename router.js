@@ -78,6 +78,16 @@ router.post('/', (req, res, next) => {
 
   //Need valid email check
   email = email.trim();
+  return User
+    .find({ email: email })
+    .count()
+    .exec()
+    .then(count => {
+      if (count > 0) {
+        return res.status(409).json({message: 'email already taken' });
+      }
+    });
+    next();
 
   // check for existing user
   return User
