@@ -329,7 +329,8 @@ function displayResults() {
 
 function addToList() {
   $('.results, .js-watchlist').on('click', '.js-addToWatchList', function (event) {
-    var jsonData = {};
+    const clickedItem = $(this);
+    let jsonData = {};
     jsonData['id'] = $(this).attr('media-id');
     jsonData['title'] = $(this).attr('title');
     jsonData['poster'] = $(this).attr('poster');
@@ -341,20 +342,19 @@ function addToList() {
       url: '/users/me/watchlist',
       data: JSON.stringify(jsonData),
       success: function () {
-        console.log("Success");
+        clickedItem.html('Saved to Watchlist');
       },
       dataType: 'json',
       contentType: "application/json; charset=utf-8",
       error: function (data) {
         if (data.status === 403) {
-          $('.').removeClass('hidden');
+          clickedItem.parent().next('.js-alreadyAdded').removeClass('hidden');
         }
         if (data.status === 500) {
-          $('.').removeClass('hidden');
+          clickedItem.parent().next('.js-addingError').removeClass('hidden');
         }
       }
     });
-    $(this).html('Saved to Watchlist');
   });
 }
 

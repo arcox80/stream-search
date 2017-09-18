@@ -72,7 +72,7 @@ div.container-fluid.nav-login {
   padding-right: 15px;
 }
 
-ul.nav.navbar-right {
+ul.logout {
   float: right;
 }
 
@@ -284,6 +284,12 @@ span.item-title {
 
 .list-item {
   margin-bottom: 10px;
+}
+
+p.warning {
+  color: white;
+  background-color: darkred;
+  text-align: center;
 }
 
 div.item-img {

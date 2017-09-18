@@ -17,7 +17,7 @@
   <header>
     <nav class="navbar">
       <a class="navbar-brand" href="dashboard.html"><img src="img/streamlogo2.png" class="logo" alt="Stream Search Logo"></a>
-      <ul class="nav navbar-right">
+      <ul class="nav navbar-right logout">
         <li><a href="/logout" class="navbar-right">Logout</a></li>
       </ul>
     </nav>
@@ -123,6 +123,8 @@
                 <div class="col-xs-5 col-lg-1">
                   <button class="js-addToWatchList btn btn-sm btn-watch btn-add" media-id="" title="" poster="" object-type="" path="">Add to Watchlist</button>
                 </div>
+                <p class="js-alreadyAdded col-xs-12 warning hidden">This title is already in your Watchlist!</p>
+                <p class="js-addingError col-xs-12 warning hidden">Internal Server Error! Title could not be added to Watchlist.</p>
                 <div class="col-xs-12">
                   <p class="item-description"></p>
                 </div>
@@ -147,10 +149,10 @@
                 </div>
               </div>
               <div class="js-offer-type-buy">
-                  <span class="js-offer-bar buy bar"></span>
-                  <div class="js-buy-row offer-rows">
-                  </div>
+                <span class="js-offer-bar buy bar"></span>
+                <div class="js-buy-row offer-rows">
                 </div>
+              </div>
             </div>
           </div>
         </div>
