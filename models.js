@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-//const STATE_ABBREVIATIONS = Object.keys(require('./state-abbreviations'));
-
 const UserSchema = mongoose.Schema({
   username: {
     type: String,
@@ -23,7 +21,7 @@ const UserSchema = mongoose.Schema({
     unique: true
   },
   watchlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Watchlist' }]
-});
+}, { runSettersOnQuery: true });
 
 const WatchListSchema = mongoose.Schema({
   title: String,

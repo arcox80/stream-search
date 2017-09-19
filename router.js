@@ -78,16 +78,7 @@ router.post('/', (req, res, next) => {
 
   //Need valid email check
   email = email.trim();
-  return User
-    .find({ email: email })
-    .count()
-    .exec()
-    .then(count => {
-      if (count > 0) {
-        return res.status(409).json({message: 'email already taken' });
-      }
-    });
-    next();
+
 
   // check for existing user
   return User
@@ -98,8 +89,17 @@ router.post('/', (req, res, next) => {
       if (count > 0) {
         return res.status(422).json({ message: 'username already taken' });
       }
-      // if no existing user, hash password
-      return User.hashPassword(password)
+      return User
+      .find({ email: email })
+      .count()
+      .exec()
+      .then(count => {
+        if (count > 0) {
+          return res.status(409).json({message: 'email already taken' });
+        }
+        // if no existing user, hash password
+        return User.hashPassword(password)
+      });
     })
     .then(hash => {
       return User

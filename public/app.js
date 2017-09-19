@@ -22,7 +22,6 @@ function watchSubmit() {
       password2: $('#password2').val()
     };
     sendUserData(user, function (data) {
-      console.log('User successfully created.', data);
       localStorage.user = JSON.stringify(data);
       window.location = 'dashboard.html';
     });
@@ -72,8 +71,6 @@ function sendLoginData(oldUser, callback) {
     contentType: 'application/json; charset=utf-8',
     success: callback,
     error: function (data) {
-      //get the status code
-      console.log(data);
       if (data.status === 401) {
         $('.login-check').removeClass('hidden');
       }

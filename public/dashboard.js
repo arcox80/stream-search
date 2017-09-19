@@ -1,4 +1,4 @@
-var state = {
+const state = {
   user: null
 };
 
@@ -7,6 +7,8 @@ if (localStorage.user) {
 }
 
 //Current Watchlist Functions
+
+//api call to retrieve user's saved watchlist and reveal populated templates
 function retrieveWatchList() {
   $.getJSON('/users/me/', function (json) {
     const listArray = json.watchlist;
@@ -37,6 +39,7 @@ function retrieveWatchList() {
   });
 }
 
+//click event that marks a title as watched on the user's dashboard and is saved to database
 function markAsWatched() {
   $('.js-watchlist-results').on('click', '.js-mark-watched', function (event) {
     let titleId = $(this).attr('title-id');
@@ -61,53 +64,75 @@ function markAsWatched() {
         titleId: titleId,
         watched: isWatched
       }),
-      success: function () {
-        console.log(`Item watched is ${isWatched}`);
-      },
       dataType: 'json',
-      contentType: "application/json; charset=utf-8"
+      contentType: "application/json; charset=utf-8",
+      success: function () {
+        console.log(`success`);
+      },
+      error: function (data) {
+        if (data.status === 404) {
+          console.log(`404 Error`);
+        }
+      }
     });
   });
 }
 
+//will remove a title from a user's watchlist on the dashboard and database
 function removeFromList() {
   $('.js-watchlist-results').on('click', '.js-remove-title', function (event) {
     let titleId = $(this).attr('title-id');
+    let elem = $(this);
     $.ajax({
       type: "DELETE",
       url: '/users/me/item/' + titleId,
-      data: JSON.stringify({ titleId: titleId }),
-      success: function () {
-        console.log("Item removed");
-        $(this).html('Removed from Watchlist');
-      },
+      data: JSON.stringify({
+        titleId: titleId
+      }),
       dataType: 'json',
-      contentType: "application/json; charset=utf-8"
+      contentType: "application/json; charset=utf-8",
+      success: function () {
+        elem.closest('.js-list-item').remove();
+      },
+      error: function (data) {
+        if (data.status === 404) {
+          console.log(`404 Error`);
+        }
+      }
     });
-    $(this).closest('.js-list-item').remove();
   });
 }
 
 //Title Search Functions
+
+//sends search terms to api to access justwatch api
 function searchTitlefromApi(searchTerm, callback) {
   let details = {
     url: '/search',
-    data: JSON.stringify({ "query": searchTerm }),
+    data: JSON.stringify({
+      "query": searchTerm
+    }),
     dataType: 'json',
     type: 'POST',
     contentType: "application/json; charset=utf-8",
-    success: callback
+    success: callback,
+    error: function (data) {
+      if (data.status === 404) {
+        $('.js-noResults').text(`Error code 404: Sorry, there was an error processing your request.`);
+        $('.js-noResults').removeClass('hidden');
+      }
+    }
   };
   $.ajax(details);
 }
 
+//listens for click event to execute searchTitlefromApi function
 function searchSubmit() {
   $('#searchTitle').on('submit', function (event) {
     event.preventDefault();
     $('.js-result-container').empty();
     let query = $('#search').val();
     searchTitlefromApi(query, function (data) {
-      console.log(data.items);
       state.movies = data.items;
       if (data.items.length === 0) {
         $('.js-noResults').text(`Sorry, there were no results for your search of "${query}"`);
@@ -127,6 +152,7 @@ function searchSubmit() {
   });
 }
 
+//displays results of the search, if any, and reveals filled out templates
 function displayResults() {
   state.movies.forEach(function (item) {
     let htmlItem = $('.js-result.templ').clone();
@@ -154,6 +180,7 @@ function displayResults() {
           if (found)
             continue;
         }
+        //justwatch has special provider id code to identify different streaming services
         let providerIdImg;
         let text;
         switch (item.offers[i].provider_id) {
@@ -279,7 +306,7 @@ function displayResults() {
         }
         providerIdImg = text;
 
-
+        q //where available streaming options are placed in the template
         if (item.offers[i].monetization_type === 'flatrate') {
           htmlItem.find('.js-offer-type-sub').addClass('offers');
           htmlItem.find('.js-offer-type-sub .js-offer-bar').html('STREAM');
@@ -327,6 +354,7 @@ function displayResults() {
   });
 }
 
+//extracts data from button attributes and uses it to add the title to the user's watchlist
 function addToList() {
   $('.results, .js-watchlist').on('click', '.js-addToWatchList', function (event) {
     const clickedItem = $(this);
@@ -359,6 +387,8 @@ function addToList() {
 }
 
 //User Search Functions
+
+//makes an ajax call to find matching users based on search terms
 function searchUsers(searchTerm, callback) {
   let details = {
     url: 'users/?q=' + searchTerm,
@@ -370,6 +400,7 @@ function searchUsers(searchTerm, callback) {
   $.ajax(details);
 }
 
+//listens for click event to call searchUsers and then calls displayUserResults if there are matches
 function userSearchSubmit() {
   $('#searchUsers').on('submit', function (event) {
     event.preventDefault();
@@ -395,6 +426,7 @@ function userSearchSubmit() {
   });
 }
 
+//fills the search results templates with the users found in the search
 function displayUserResults() {
   state.userResults.forEach(function (item) {
     let htmlItem = $('.js-userResult.templ').clone();
@@ -420,6 +452,7 @@ function displayUserResults() {
   $('.js-welcome').addClass('hidden');
 }
 
+//listens for click event on username, then makes ajax call to retrieve user's watchlist
 function usernameClick() {
   $('.js-userResults').on('click', '.js-username', function (event) {
     event.preventDefault();
@@ -429,7 +462,6 @@ function usernameClick() {
     $('.js-userResults').addClass('hidden');
     $.getJSON('/users/' + userId, function (json) {
       const listArray = json.watchlist;
-      console.log(listArray);
       listArray.forEach(function (item) {
         let htmlItem = $('.js-list-item.templ').clone();
         htmlItem.find('.js-item-title').append(item.title);
@@ -466,74 +498,3 @@ $(function () {
   removeFromList();
   markAsWatched();
 });
-
-
-
-/* JSON Data
-
-{
-  "content_types": -- null or ['movie', 'show']
-	"presentation_types": -- null or ['hd', 'sd']
-	"providers": -- null or ["mbi", "qfs", "tpl", "msf", "pls", "ply", "itu", "ddi", "crk", "qfx", "prs", "stn", "nfx"]
-	"genres": -- null or ["act", "ani", "cmy", "crm", "drm", "msc", "hrr", "hst", "fnt", "trl", "war", "wsn", "rma", "scf","doc", "fml", "spt"]
-	"languages": -- null
-	"release_year_from": -- null or year > 1900
-	"release_year_until": -- null or year < current year
-	"monetization_types": -- null or ["flatrate", "ads", "rent", "buy", "free"]
-	"min_price": -- null or integer value
-	"max_price": -- null or integer value,
-	"scoring_filter_types": -- null or {
-		"imdb:score": {
-			"min_scoring_value":0.0,"max_scoring_value":10.0
-			},
-			"tomato:meter":	{
-				"min_scoring_value":0,"max_scoring_value":100
-				}
-	},
-	"cinema_release": -- null,
-	"query": -- null or title as string 
-}
-*/
-
-/*
-
-2 - itunes
-3 - google
-7 - vudu
-8 - netflix
-9 - amazon prime
-10 - amazon
-11 - mubi
-12 - crackle
-14 - realeyz
-15 - hulu
-18 - psn
-25 - fandor
-27 - hbo now
-31 - hbo go
-34 - epix
-37 - showtime
-43 - starz
-60 - fandango
-68 - microsoft
-73 - tubitv
-78 - cbs
-79 - nbc
-80 - amc
-83 - cw
-87 - acorn
-92 - yahoo
-99 - shudder
-100 - guidedoc
-102 - filmstruck
-105 - fandango now
-123 - fx now
-139 - max go
-143 - sundance now
-148 - abc
-151 - britbox
-155 - history
-156 - a&e
-157 - lifetime
-175 - netflix kids
-*/
