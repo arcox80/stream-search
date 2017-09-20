@@ -439,9 +439,10 @@ function userSearchSubmit() {
 function displayUserResults() {
   state.userResults.forEach(function (item) {
     let htmlItem = $('.js-userResult.templ').clone();
-    htmlItem.find('.js-username').append(item.username).attr('uid', item._id);
-    htmlItem.find('.js-username').attr('firstName', item.firstName);
-    htmlItem.find('.js-name').append(`(${item.firstName} ${item.lastName})`);
+    htmlItem.find('.js-name-title').append(`${item.firstName} ${item.lastName}`);
+    htmlItem.find('.js-name').attr('uid', item._id);
+    htmlItem.find('.js-name').attr('firstName', item.firstName);
+    htmlItem.find('.js-username').append(`(${item.username})`);
     if (item.watchlist.length === 1) {
       htmlItem.find('.js-listCount').append(`${item.watchlist.length} item in their Watchlist.`);
     } else {
@@ -463,7 +464,7 @@ function displayUserResults() {
 
 //listens for click event on username, then makes ajax call to retrieve user's watchlist
 function usernameClick() {
-  $('.js-userResults').on('click', '.js-username', function (event) {
+  $('.js-userResults').on('click', '.js-name', function (event) {
     event.preventDefault();
     let userId = $(this).attr('uid');
     let firstName = $(this).attr('firstName');
