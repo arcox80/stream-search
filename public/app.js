@@ -6,6 +6,7 @@ if (localStorage.user) {
   state.user = JSON.parse(localStorage.user);
 }
 
+//listens for submission of a new user
 function watchSubmit() {
   $('#createUser').on('submit', function (event) {
     event.preventDefault();
@@ -28,6 +29,7 @@ function watchSubmit() {
   });
 }
 
+//ajax call to register a new user
 function sendUserData(newUser, callback) {
   let details = {
     url: '/users',
@@ -48,6 +50,7 @@ function sendUserData(newUser, callback) {
   $.ajax(details);
 }
 
+//listens for login submission of an existing user
 function userLogin() {
   $('#userLogin').on('submit', function (event) {
     event.preventDefault();
@@ -62,6 +65,7 @@ function userLogin() {
   });
 }
 
+//ajax call for logging in an existing user
 function sendLoginData(oldUser, callback) {
   let details = {
     url: '/login',
@@ -79,11 +83,7 @@ function sendLoginData(oldUser, callback) {
       }
     }
   };
-  $.ajax(details)
-    .fail(function (xhr, status, errorThrown) {
-      console.log(`Error: ${errorThrown}`);
-      console.log(`Status: ${status}`);
-    });
+  $.ajax(details);
 }
 
 $(function () {

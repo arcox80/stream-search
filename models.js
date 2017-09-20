@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
+//schema for a new user added to the user collection
 const UserSchema = mongoose.Schema({
   username: {
     type: String,
@@ -23,6 +24,7 @@ const UserSchema = mongoose.Schema({
   watchlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Watchlist' }]
 }, { runSettersOnQuery: true });
 
+//schema for a title added to the watchlist collection
 const WatchListSchema = mongoose.Schema({
   title: String,
   id: Number,

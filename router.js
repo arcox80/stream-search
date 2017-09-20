@@ -18,7 +18,6 @@ router.use(passport.initialize());
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated())
     return next();
-  // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
   res.status(401).json({});
 }
 

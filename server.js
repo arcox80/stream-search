@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const request = require('request');
 const cors = require('cors');
-var http = require('http')
+const http = require('http');
 
 const { router: usersRouter } = require('./router');
 
