@@ -312,7 +312,7 @@ function displayResults() {
         }
         providerIdImg = text;
 
-        q //where available streaming options are placed in the template
+        //where available streaming options are placed in the template
         if (item.offers[i].monetization_type === 'flatrate') {
           htmlItem.find('.js-offer-type-sub').addClass('offers');
           htmlItem.find('.js-offer-type-sub .js-offer-bar').html('STREAM');
