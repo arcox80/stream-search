@@ -13,6 +13,9 @@ function retrieveWatchList() {
   $.getJSON('/users/me/')
     .done(function (json) {
     const listArray = json.watchlist;
+    if (listArray.length === 0) {
+      $('.js-empty-watchlist').removeClass('hidden');
+    }
     listArray.forEach(function (item) {
       let htmlItem = $('.js-list-item.templ').clone();
       htmlItem.find('.js-item-title').append(item.title);
