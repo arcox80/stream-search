@@ -76,11 +76,8 @@ router.post('/', (req, res, next) => {
     return res.status(422).json({ message: 'Passwords do not match' });
   }
 
-  //Need valid email check
+  // check for existing user and email
   email = email.trim();
-
-
-  // check for existing user
   return User
     .find({ username })
     .count()
@@ -97,7 +94,7 @@ router.post('/', (req, res, next) => {
         if (count > 0) {
           return res.status(409).json({message: 'email already taken' });
         }
-        // if no existing user, hash password
+        // if no existing user or email, hash password
         return User.hashPassword(password)
       });
     })
@@ -183,7 +180,6 @@ router.get('/:id', isAuthenticated, (req, res) => {
 
 //mark title as watched/unwatched in watchlist
 router.put('/me/item/:id', (req, res) => {
-  //console.log(req.params.id, req.body.watched);
   WatchList.findByIdAndUpdate(req.params.id,
     { $set: { watched: req.body.watched } },
     { new: true },

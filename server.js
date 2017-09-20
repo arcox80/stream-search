@@ -31,10 +31,7 @@ app.use(express.static('views'));
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
-    console.log(username);
-    console.log('starting strategy');
     User.findOne({ username: username }, function (err, user) {
-      console.log(`finding ${user}`);
       if (err) { return done(err); }
       if (!user) { return done(null, false); }
       user.validatePassword(password)
@@ -42,7 +39,6 @@ passport.use(new LocalStrategy(
           if (!valid) {
             return done(null, false, 'Incorrect password');
           }
-          console.log('verified');
           return done(null, user);
         })
     });
@@ -56,12 +52,10 @@ app.use(passport.session());
 
 
 passport.serializeUser(function (user, done) {
-  console.log("serialize");
   done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-  console.log("deserialize");
   User.findById(id, function (err, user) {
     console.log(err);
     done(err, user);

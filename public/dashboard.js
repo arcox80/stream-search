@@ -10,7 +10,8 @@ if (localStorage.user) {
 
 //api call to retrieve user's saved watchlist and reveal populated templates
 function retrieveWatchList() {
-  $.getJSON('/users/me/', function (json) {
+  $.getJSON('/users/me/')
+    .done(function (json) {
     const listArray = json.watchlist;
     listArray.forEach(function (item) {
       let htmlItem = $('.js-list-item.templ').clone();
@@ -36,6 +37,11 @@ function retrieveWatchList() {
       $('.js-returnButton').addClass('hidden');
       $('.js-welcome').removeClass('hidden');
     });
+  })
+  .fail(function (error) {
+    if (error.status === 401) {
+      window.location = 'index.html';
+    }
   });
 }
 

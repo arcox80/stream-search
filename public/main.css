@@ -101,6 +101,13 @@ body {
   padding: 15px;
 }
 
+span.unauthorized {
+  display: block;
+  background: darkred;
+  color: white;
+  text-align: center;
+}
+
 .body-title {
   font-weight: bold;
   font-size: 4rem;
