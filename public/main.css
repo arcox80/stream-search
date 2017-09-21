@@ -2,10 +2,6 @@
   box-sizing: border-box;
 }
 
-.hidden {
-  display: none;
-}
-
 .templ {
   display: none;
 }
