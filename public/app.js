@@ -1,4 +1,4 @@
-let state = {
+const state = {
   user: null
 };
 
@@ -31,7 +31,7 @@ function watchSubmit() {
 
 //ajax call to register a new user
 function sendUserData(newUser, callback) {
-  let details = {
+  const details = {
     url: '/users',
     data: JSON.stringify(newUser),
     dataType: 'json',
@@ -67,7 +67,7 @@ function userLogin() {
 
 //ajax call for logging in an existing user
 function sendLoginData(oldUser, callback) {
-  let details = {
+  const details = {
     url: '/login',
     data: JSON.stringify(oldUser),
     dataType: 'json',
