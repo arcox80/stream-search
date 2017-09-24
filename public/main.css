@@ -149,6 +149,7 @@ button.form-btn {
   padding: 2px 12px;
   color: #183f4e;
   vertical-align: top;
+  background-color: rgb(221, 221, 221);  
 }
 
 .intro-paragraph {
