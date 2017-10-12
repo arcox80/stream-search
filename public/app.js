@@ -40,10 +40,7 @@ function sendUserData(newUser, callback) {
     success: callback,
     error: function (data) {
       if (data.status === 422) {
-        $('.js-existingUser').removeClass('hidden');
-      }
-      if (data.status === 409) {
-        $('.js-existingEmail').removeClass('hidden');
+        $('.js-registrationError').removeClass('hidden').text(data.responseJSON.message);
       }
     }
   };

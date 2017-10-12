@@ -18,7 +18,7 @@ router.use(passport.initialize());
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated())
     return next();
-  res.status(401).json({});
+  res.status(401).json({message: 'Error 401: You must be authenticated to access this resource'});
 }
 
 //user search
@@ -38,41 +38,41 @@ router.get('/', (req, res) => {
 //new user registration
 router.post('/', (req, res, next) => {
   if (!req.body) {
-    return res.status(400).json({ message: 'No request body' });
+    return res.status(400).json({ message: 'Please fill out the form in order to register' });
   }
 
   if (!('username' in req.body)) {
-    return res.status(422).json({ message: 'Missing field: username' });
+    return res.status(422).json({ message: 'You must enter a username' });
   }
 
   let { username, password, password2, firstName, lastName, email } = req.body;
 
   if (typeof username !== 'string') {
-    return res.status(422).json({ message: 'Incorrect field type: username' });
+    return res.status(422).json({ message: 'Username needs to consist of letters and/or numbers' });
   }
 
   username = username.trim();
 
   if (username.length < 3) {
-    return res.status(422).json({ message: 'Incorrect field length: username' });
+    return res.status(422).json({ message: 'A username must be at least 3 characters long' });
   }
 
   if (!(password)) {
-    return res.status(422).json({ message: 'Missing field: password' });
+    return res.status(422).json({ message: 'You must enter a password' });
   }
 
   if (typeof password !== 'string') {
-    return res.status(422).json({ message: 'Incorrect field type: password' });
+    return res.status(422).json({ message: 'Your password must consist or letters and/or numbers' });
   }
 
   password = password.trim();
 
   if (password.length < 5) {
-    return res.status(422).json({ message: 'Incorrect field length: password' });
+    return res.status(422).json({ message: 'Your password must be at least 5 characters long' });
   }
 
   if (password !== password2) {
-    return res.status(422).json({ message: 'Passwords do not match' });
+    return res.status(422).json({ message: 'Your passwords do not match' });
   }
 
   // check for existing user and email
@@ -83,7 +83,7 @@ router.post('/', (req, res, next) => {
     .exec()
     .then(count => {
       if (count > 0) {
-        return res.status(422).json({ message: 'username already taken' });
+        return res.status(422).json({ message: 'This username is already taken' });
       }
       return User
       .find({ email: email })
@@ -91,7 +91,7 @@ router.post('/', (req, res, next) => {
       .exec()
       .then(count => {
         if (count > 0) {
-          return res.status(409).json({message: 'email already taken' });
+          return res.status(422).json({message: 'This email is already taken' });
         }
         // if no existing user or email, hash password
         return User.hashPassword(password)
@@ -168,7 +168,6 @@ router.get('/:id', isAuthenticated, (req, res) => {
     .exec(function (err, user) {
       if (!err) {
         console.log('user watchlist retrieved');
-        console.log(user);
         res.json(user)
       } else {
         console.log(err);
@@ -188,7 +187,7 @@ router.put('/me/item/:id', (req, res) => {
         res.status(204).send();
       } else {
         console.log(err);
-        res.status(404);
+        res.status(404).json({message: 'Error 404: The title could not be found'});
       }
     });
 });
@@ -209,7 +208,7 @@ router.delete('/me/item/:id', (req, res) => {
       });
     } else {
       console.log(err);
-      res.status(404);
+      res.status(404).json({message: 'Error 404: The title could not be found'});
     }
   });
 });
